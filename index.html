@@ -77,22 +77,28 @@
             <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/40"></div>
         </div>
         <div class="relative z-10 text-center px-6 space-y-6 animate-float-slow">
+            <!-- Decorative floating elements -->
+            <div class="absolute -top-20 -left-20 text-4xl animate-bounce delay-700 opacity-50 pointer-events-none">✨</div>
+            <div class="absolute top-10 -right-20 text-3xl animate-pulse delay-300 opacity-50 pointer-events-none">💖</div>
+
             <p class="font-title tracking-[0.3em] text-sm md:text-xl uppercase animate-pulse">The Wedding Of</p>
             <h1
-                class="font-handwriting text-6xl md:text-8xl bg-clip-text text-transparent bg-gradient-to-r from-pink-300 via-purple-200 to-pink-300 animate-magical-glow">
-                Irfan & Dhea
+                class="font-handwriting text-6xl md:text-8xl bg-clip-text text-transparent bg-gradient-to-r from-pink-300 via-purple-200 to-pink-300 animate-magical-glow flex flex-col md:block items-center gap-2">
+                <span>Irfan</span>
+                <span class="text-4xl md:text-6xl my-2 md:my-0">&</span>
+                <span>Dhea</span>
             </h1>
 
-            <div class="glass p-6 rounded-2xl max-w-sm mx-auto backdrop-blur-md border border-white/20">
-                <p class="text-xs font-bold uppercase tracking-widest mb-2 opacity-80">Kepada Yth. Bapak/Ibu/Saudara/i</p>
-                <h2 id="guest-name" class="text-2xl md:text-3xl font-bold text-pink-200 break-words">Tamu Undangan</h2>
+            <div class="glass p-6 rounded-2xl max-w-sm mx-auto backdrop-blur-md border border-white/20 relative">
+                <div class="absolute -top-3 -right-3 text-2xl animate-spin-slow pointer-events-none">🌸</div>
+                <p class="text-xs font-bold uppercase tracking-widest mb-2 opacity-80">Dear </p>
+                <h2 id="guest-name" class="text-2xl md:text-3xl font-bold text-pink-200 break-words">Guest</h2>
             </div>
-
             <button onclick="openInvitation()"
                 class="group relative px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full font-bold shadow-[0_0_20px_rgba(236,72,153,0.5)] hover:scale-105 transition-transform min-h-[50px]">
                 <span class="flex items-center gap-2">
                     <span class="material-symbols-outlined group-hover:animate-wiggle">mail_lock</span>
-                    Buka Undangan
+                    Open Invitation
                 </span>
             </button>
         </div>
@@ -168,8 +174,11 @@
                 class="reveal font-title text-sm md:text-xl tracking-[0.4em] uppercase font-bold text-purple-900 dark:text-purple-200 mb-4 drop-shadow-md active">
                 The Wedding Of</p>
             <h1
-                class="reveal font-handwriting text-7xl md:text-9xl mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-700 via-pink-600 to-purple-700 dark:from-purple-300 dark:via-pink-200 dark:to-purple-300 animate-magical-glow p-2 leading-tight active">
-                Irfan &amp; Dhea</h1>
+                class="reveal font-handwriting text-7xl md:text-9xl mb-8 bg-clip-text text-transparent bg-gradient-to-r from-purple-700 via-pink-600 to-purple-700 dark:from-purple-300 dark:via-pink-200 dark:to-purple-300 animate-magical-glow p-2 leading-tight active flex flex-col md:block items-center gap-2 md:gap-0">
+                <span>Irfan</span>
+                <span class="text-5xl md:text-7xl my-4 md:my-0">&amp;</span>
+                <span>Dhea</span>
+            </h1>
             <div
                 class="reveal flex flex-wrap justify-center gap-4 text-purple-900 dark:text-purple-100 mb-10 text-sm font-bold tracking-widest active">
                 <span class="border-b border-current pb-1">SATURDAY, JAN 24TH</span>
@@ -195,6 +204,11 @@
 
     <!-- Story Section -->
     <section class="py-24 relative overflow-hidden" id="story">
+        <!-- Decorative elements for Story Section -->
+        <div class="absolute top-10 left-10 text-4xl animate-float-slow opacity-50 pointer-events-none">💖</div>
+        <div class="absolute bottom-20 right-20 text-3xl animate-pulse delay-300 opacity-50 pointer-events-none">✨</div>
+        <div class="absolute top-1/2 left-1/4 text-2xl animate-wiggle delay-500 opacity-40 pointer-events-none">🌸</div>
+        <div class="absolute bottom-10 left-1/3 text-xl animate-bounce delay-700 opacity-30 pointer-events-none">💫</div>
         <div class="container mx-auto px-6">
             <div class="flex flex-col md:flex-row items-center gap-12">
                 <div class="md:w-1/2 relative reveal w-full max-w-sm mx-auto">
@@ -230,17 +244,24 @@
 
     <!-- Countdown Section -->
     <section class="py-12 glass border-y border-white/20 relative z-20">
+        <!-- Decorative elements for Countdown Section -->
+        <div class="absolute top-5 left-5 text-3xl animate-spin-slow opacity-30 pointer-events-none">⏳</div>
+        <div class="absolute bottom-5 right-5 text-2xl animate-float-medium opacity-40 pointer-events-none">💖</div>
+        <div class="absolute top-1/4 right-1/4 text-xl animate-bounce delay-200 opacity-20 pointer-events-none">✨</div>
         <div class="container mx-auto px-4 text-center">
-            <h3 class="font-handwriting text-3xl text-purple-800 dark:text-purple-200 mb-8">Counting Down The Magic</h3>
+            <h3 class="font-handwriting text-3xl text-purple-800 dark:text-purple-200 mb-12 relative inline-block">
+                Counting Down The Magic
+                <span class="absolute -top-6 -right-8 text-2xl animate-bounce">⏳</span>
+            </h3>
             
             <!-- Rounded Container for Countdown -->
-            <div class="inline-block bg-white/40 dark:bg-black/20 backdrop-blur-sm rounded-3xl p-6 shadow-lg border border-purple-200/50 dark:border-purple-500/30">
+            <div class="inline-block bg-white/40 dark:bg-black/20 backdrop-blur-sm rounded-3xl p-6 shadow-lg border border-purple-200/50 dark:border-purple-500/30 mb-8">
                 <div class="flex flex-nowrap justify-center gap-2 md:gap-6 font-title" id="countdown">
                     <!-- Javascript will populate this -->
                 </div>
             </div>
             
-            <div class="mt-8">
+            <div class="mt-12">
                 <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Wedding+Irfan+%26+Dhea&dates=20260124T160000/20260124T230000&details=The+Wedding+of+Irfan+and+Dhea+at+Yogyakarta&location=Yogyakarta,+Indonesia"
                     target="_blank"
                     class="inline-flex items-center gap-2 px-6 py-2 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-200 rounded-full text-sm font-bold hover:bg-purple-200 transition-colors min-h-[44px]">
@@ -253,6 +274,11 @@
 
     <!-- Details Section -->
     <section class="py-24 relative overflow-hidden" id="details">
+        <!-- Decorative elements for Details Section -->
+        <div class="absolute top-0 left-0 w-32 h-32 bg-pink-300/20 rounded-full blur-3xl animate-pulse pointer-events-none"></div>
+        <div class="absolute bottom-0 right-0 w-40 h-40 bg-purple-300/20 rounded-full blur-3xl animate-float-slow pointer-events-none"></div>
+        <div class="absolute top-1/3 right-10 text-4xl animate-wiggle opacity-60 pointer-events-none">💍</div>
+        <div class="absolute bottom-1/4 left-10 text-3xl animate-bounce delay-400 opacity-50 pointer-events-none">🥂</div>
         <div class="container mx-auto px-6">
             <div class="text-center mb-12 reveal">
                 <h2 class="font-title text-center text-3xl mb-16 tracking-widest uppercase">The Royal Celebration</h2>
@@ -309,6 +335,10 @@
 
     <!-- Gallery (Vertical Stack Style) -->
     <section class="py-24 bg-white/50 dark:bg-black/20" id="gallery">
+        <!-- Decorative elements for Gallery Section -->
+        <div class="absolute top-10 left-10 text-3xl animate-float-slow opacity-60 pointer-events-none">🦋</div>
+        <div class="absolute bottom-10 right-10 text-4xl animate-pulse delay-200 opacity-50 pointer-events-none">✨</div>
+        <div class="absolute top-1/4 right-1/4 text-2xl animate-wiggle delay-400 opacity-40 pointer-events-none">💖</div>
         <div class="container mx-auto px-6 max-w-2xl">
             <h2 class="reveal font-handwriting text-5xl text-center text-purple-900 dark:text-white mb-12">
                 Captured Magic</h2>
@@ -344,6 +374,11 @@
 
     <!-- Wedding Gift (Dark Purple Card Style) -->
     <section class="py-24 relative" id="gift">
+        <!-- Decorative elements for Gift Section -->
+        <div class="absolute top-10 left-10 text-4xl animate-bounce opacity-40 pointer-events-none">🎁</div>
+        <div class="absolute bottom-1/4 right-10 text-3xl animate-wiggle delay-500 opacity-40 pointer-events-none">🧸</div>
+        <div class="absolute top-1/2 left-5 text-2xl animate-spin-slow opacity-30 pointer-events-none">❄️</div>
+        
         <div class="container mx-auto px-4 relative z-10">
             <div class="max-w-md mx-auto reveal">
                 <!-- Main Card -->
@@ -384,8 +419,15 @@
 
     <!-- RSVP Section -->
     <section class="py-24 relative" id="rsvp">
+        <!-- Decorative elements for RSVP Section -->
+        <div class="absolute top-0 right-0 text-4xl animate-float-slow opacity-30 pointer-events-none">💌</div>
+        <div class="absolute bottom-10 left-10 text-3xl animate-pulse delay-700 opacity-40 pointer-events-none">✒️</div>
+        <div class="absolute top-20 left-20 w-24 h-24 bg-pink-400/10 rounded-full blur-xl animate-bounce pointer-events-none"></div>
+
         <div class="container mx-auto px-4 max-w-2xl relative z-10">
-            <div class="glass bg-white/95 dark:bg-slate-900/90 p-8 md:p-10 rounded-[2rem] shadow-2xl border border-white/40 reveal">
+            <div class="glass bg-white/95 dark:bg-slate-900/90 p-8 md:p-10 rounded-[2rem] shadow-2xl border border-white/40 reveal relative overflow-hidden">
+                <!-- Inner decor -->
+                 <div class="absolute -top-10 -right-10 text-[10rem] opacity-5 rotate-12 pointer-events-none">🕊️</div>
                 
                 <!-- Icon & Title -->
                 <div class="text-center mb-8">
@@ -471,7 +513,8 @@
 
     <!-- Footer -->
     <footer class="bg-gray-900 text-white py-12 text-center relative overflow-hidden">
-        <div class="container mx-auto px-6 relative z-10">
+        <div class="container mx-auto px-6 relative z-10 pb-10">
+            <div class="absolute bottom-4 left-0 w-full animate-move-cloud opacity-20 pointer-events-none text-4xl">🦄</div>
             <p class="text-xs text-gray-500">© 2026 Irfan &amp; Dhea</p>
         </div>
     </footer>
