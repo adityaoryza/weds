@@ -108,21 +108,29 @@
                 <span class="material-symbols-outlined text-3xl" id="menu-icon">menu</span>
             </button>
         </div>
-        <!-- Mobile Menu -->
-        <div class="fixed inset-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl md:hidden flex flex-col justify-center items-center space-y-8 shadow-2xl transform translate-y-[-100%] transition-transform duration-500"
-            id="mobile-menu">
-            <button class="absolute top-6 right-6 p-2 text-purple-600 dark:text-purple-300"
-                onclick="toggleMobileMenu()">
-                <span class="material-symbols-outlined text-4xl">close</span>
-            </button>
-            <a class="text-2xl font-title font-bold" href="#story" onclick="toggleMobileMenu()">Our Story</a>
-            <a class="text-2xl font-title font-bold" href="#details" onclick="toggleMobileMenu()">Details</a>
-            <a class="text-2xl font-title font-bold" href="#gallery" onclick="toggleMobileMenu()">Moments</a>
-            <a class="text-2xl font-title font-bold" href="#gift" onclick="toggleMobileMenu()">Wedding Gift</a>
-            <a class="text-2xl font-title font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500"
-                href="#rsvp" onclick="toggleMobileMenu()">RSVP</a>
         </div>
     </nav>
+
+    <!-- Mobile Menu -->
+    <div class="fixed inset-0 z-[60] bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl md:hidden flex flex-col justify-center items-center space-y-8 shadow-2xl transform translate-y-[-100%] transition-transform duration-500"
+        id="mobile-menu">
+        <button class="absolute top-6 right-6 p-2 text-purple-600 dark:text-purple-300" onclick="toggleMobileMenu()">
+            <span class="material-symbols-outlined text-4xl">close</span>
+        </button>
+        <a class="text-2xl font-title font-bold" href="#story" onclick="toggleMobileMenu()">Our Story</a>
+        <a class="text-2xl font-title font-bold" href="#details" onclick="toggleMobileMenu()">Details</a>
+        <a class="text-2xl font-title font-bold" href="#gallery" onclick="toggleMobileMenu()">Moments</a>
+        <a class="text-2xl font-title font-bold" href="#gift" onclick="toggleMobileMenu()">Wedding Gift</a>
+        <a class="text-2xl font-title font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500"
+            href="#rsvp" onclick="toggleMobileMenu()">RSVP</a>
+        <button class="flex items-center gap-2 px-6 py-3 rounded-full border border-purple-200 dark:border-purple-800"
+            onclick="toggleTheme(); toggleMobileMenu()">
+            <span class="material-symbols-outlined text-purple-600 dark:text-yellow-300"
+                id="theme-icon-mobile">wb_sunny</span>
+            <span class="font-bold text-sm">Switch Theme</span>
+        </button>
+    </div>
+
 
     <!-- Game UI -->
     <div class="fixed top-24 right-6 z-50 glass px-4 py-2 rounded-full shadow-2xl transform transition-transform duration-500 flex items-center gap-3 backdrop-blur-md border border-purple-200"
