@@ -408,9 +408,10 @@
 
                         <!-- Copy Button with Animated SVG -->
                         <button onclick="copyAccountNumber(this, '1234567890')" 
-                                class="absolute bottom-6 right-6 p-3 rounded-lg bg-purple-500 dark:bg-purple-600 hover:bg-purple-600 dark:hover:bg-purple-700 text-white transition-all active:scale-95 shadow-lg min-h-[44px] min-w-[44px] flex items-center justify-center group/btn" 
-                                title="Salin Nomor Rekening">
-                            <div class="relative w-5 h-5">
+                                class="absolute bottom-6 right-6 p-3 rounded-lg bg-purple-500 dark:bg-purple-600 hover:bg-purple-600 dark:hover:bg-purple-700 text-white transition-all active:scale-95 shadow-lg min-h-[44px] min-w-[44px] flex items-center justify-center group/btn z-20 cursor-pointer" 
+                                title="Salin Nomor Rekening"
+                                type="button">
+                            <div class="relative w-5 h-5 pointer-events-none">
                                 <!-- Clippy Icon -->
                                 <svg id="copy-clippy" class="absolute top-0 left-0 transition-all duration-300" width="20" height="20" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style="stroke-dasharray: 50; stroke-dashoffset: 0;">
                                     <path d="M5.75 4.75H10.25V1.75H5.75V4.75Z" />
