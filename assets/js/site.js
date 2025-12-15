@@ -130,8 +130,20 @@ function foundUnicorn(el) {
 function triggerGrandFinale() {
     const container = document.getElementById('finale-container');
     const msg = document.getElementById('finale-message');
+    const gameUI = document.getElementById('game-ui');
+
+    // Hide Game UI smoothly
+    if (gameUI) {
+        gameUI.style.transition = 'opacity 1s ease-out, transform 1s ease-out';
+        gameUI.style.opacity = '0';
+        gameUI.style.transform = 'scale(0) translateX(100%)';
+    }
 
     container.classList.remove('hidden');
+    // Ensure overlay is visible
+    const overlay = document.getElementById('finale-overlay');
+    if (overlay) overlay.classList.remove('opacity-0');
+
     setTimeout(() => msg.classList.remove('scale-0'), 100);
 
     // 1. Release massive amount of lanterns
@@ -158,11 +170,17 @@ function triggerGrandFinale() {
     setTimeout(() => {
         clearInterval(lanternInterval);
         clearInterval(confettiInterval);
-        msg.classList.add('scale-0');
+        
+        // Formatting exit
+        msg.classList.add('scale-0'); // Shrink message
+        if (overlay) overlay.classList.add('opacity-0'); // Fade out black overlay
+        
+        // Wait for transitions to finish before hiding container
         setTimeout(() => {
             container.classList.add('hidden');
+            // Clean/Reset container content while keeping structure if needed
+            // But main purpose is achieved: no alert, smooth fade.
             container.innerHTML = '<div class="absolute inset-0 bg-black/40 transition-opacity duration-1000" id="finale-overlay"></div><div class="absolute inset-0 flex items-center justify-center"><div class="text-center transform scale-0 transition-transform duration-1000" id="finale-message"><h2 class="text-6xl md:text-8xl font-handwriting text-white drop-shadow-[0_0_20px_rgba(255,215,0,0.8)]">Magic Unlocked!</h2><p class="text-white text-xl mt-4 font-bold tracking-widest uppercase">The wedding is blessed</p></div></div>';
-            alert("✨ Thank you for blessing our union! ✨");
         }, 1000);
     }, 8000);
 }
@@ -269,24 +287,24 @@ setInterval(() => {
     const m = Math.floor(((date - now) % (1000 * 60 * 60)) / (1000 * 60));
     const s = Math.floor(((date - now) % (1000 * 60)) / 1000);
 
-    const boxClass = "glass flex-1 min-w-0 py-2 md:w-24 md:py-0 md:h-28 rounded-xl flex flex-col items-center justify-center border border-pink-200 dark:border-purple-500 shadow-sm md:shadow-lg backdrop-blur-md transform transition-all";
-    const numClass = "font-handwriting text-2xl md:text-5xl font-bold text-pink-600 dark:text-pink-300 drop-shadow-sm leading-none";
-    const labelClass = "text-[8px] md:text-xs font-bold tracking-widest text-purple-600 dark:text-purple-200 mt-1 uppercase";
+    const boxClass = "glass w-20 h-24 md:w-28 md:h-32 rounded-2xl flex flex-col items-center justify-center border border-pink-200 dark:border-purple-500 shadow-md backdrop-blur-sm transform hover:scale-105 transition-transform duration-300 bg-white/40 dark:bg-black/20";
+    const numClass = "font-handwriting text-3xl md:text-5xl font-bold text-pink-600 dark:text-pink-300 drop-shadow-sm leading-none mb-1";
+    const labelClass = "text-[10px] md:text-xs font-bold tracking-widest text-purple-900 dark:text-purple-200 uppercase opacity-70";
 
     document.getElementById('countdown').innerHTML = `
-        <div class="${boxClass} animate-float-slow">
+        <div class="${boxClass}">
             <span class="${numClass}">${d}</span>
             <span class="${labelClass}">Hari</span>
         </div>
-        <div class="${boxClass} animate-float-medium" style="animation-delay: 0.2s">
+        <div class="${boxClass}">
             <span class="${numClass}">${h}</span>
             <span class="${labelClass}">Jam</span>
         </div>
-        <div class="${boxClass} animate-float-slow" style="animation-delay: 0.4s">
+        <div class="${boxClass}">
             <span class="${numClass}">${m}</span>
             <span class="${labelClass}">Menit</span>
         </div>
-        <div class="${boxClass} animate-float-medium" style="animation-delay: 0.6s">
+        <div class="${boxClass}">
             <span class="${numClass}">${s}</span>
             <span class="${labelClass}">Detik</span>
         </div>
