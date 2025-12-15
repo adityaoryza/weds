@@ -58,19 +58,23 @@
         <div class="cloud w-36 h-12 top-60 opacity-50 scale-110" style="animation: move-cloud 50s linear infinite; animation-delay: -35s;"></div>
     </div>
     
-    <!-- Unicorn Frame Border -->
+    <!-- Unicorn Frame Border (Temporarily Hidden) -->
+    <!--
     <div class="unicorn-frame">
         <div class="frame-corner corner-tl" style="background-image: url('assets/images/corner_tl.png');"></div>
         <div class="frame-corner corner-tr" style="background-image: url('assets/images/corner_tl.png');"></div>
         <div class="frame-corner corner-br" style="background-image: url('assets/images/corner_tl.png');"></div>
         <div class="frame-corner corner-bl" style="background-image: url('assets/images/corner_tl.png');"></div>
     </div>
+    -->
 
     <!-- COVER PAGE -->
     <div id="cover-page"
         class="fixed inset-0 z-[100] bg-black text-white flex flex-col items-center justify-center transition-transform duration-1000 ease-in-out">
         <div class="absolute inset-0 z-0">
-            <img src="assets/images/hero_bg.png" class="w-full h-full object-cover opacity-60" alt="Cover Background">
+            <img src="assets/images/hero_bg.png" class="w-full h-full object-cover opacity-40" alt="Cover Background">
+            <!-- Darker overlay to reduce overexposure -->
+            <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/40"></div>
         </div>
         <div class="relative z-10 text-center px-6 space-y-6 animate-float-slow">
             <p class="font-title tracking-[0.3em] text-sm md:text-xl uppercase animate-pulse">The Wedding Of</p>
@@ -95,7 +99,7 @@
     </div>
 
     <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 glass border-b border-white/20 transition-all duration-300">
+    <nav class="fixed top-0 w-full z-50 bg-white/30 dark:bg-black/30 backdrop-blur-xl border-b border-white/10 dark:border-white/5 transition-all duration-300 shadow-sm">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a class="text-2xl font-handwriting font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-purple-600 dark:from-pink-200 dark:to-purple-300 active:scale-95 transition-transform"
                 href="#" onclick="window.scrollTo(0,0)">I &amp; D</a>
@@ -228,9 +232,14 @@
     <section class="py-12 glass border-y border-white/20 relative z-20">
         <div class="container mx-auto px-4 text-center">
             <h3 class="font-handwriting text-3xl text-purple-800 dark:text-purple-200 mb-8">Counting Down The Magic</h3>
-            <div class="flex flex-nowrap w-full justify-center gap-2 md:gap-10 font-title px-1" id="countdown">
-                <!-- Javascript will populate this -->
+            
+            <!-- Rounded Container for Countdown -->
+            <div class="inline-block bg-white/40 dark:bg-black/20 backdrop-blur-sm rounded-3xl p-6 shadow-lg border border-purple-200/50 dark:border-purple-500/30">
+                <div class="flex flex-nowrap justify-center gap-2 md:gap-6 font-title" id="countdown">
+                    <!-- Javascript will populate this -->
+                </div>
             </div>
+            
             <div class="mt-8">
                 <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Wedding+Irfan+%26+Dhea&dates=20260124T160000/20260124T230000&details=The+Wedding+of+Irfan+and+Dhea+at+Yogyakarta&location=Yogyakarta,+Indonesia"
                     target="_blank"
@@ -467,12 +476,12 @@
         </div>
     </footer>
 
-    <!-- FAB Audio -->
+    <!-- FAB Audio (Compact) -->
     <button
-        class="fixed bottom-6 right-6 z-50 bg-white dark:bg-slate-800 p-4 rounded-full shadow-2xl active:scale-90 transition-transform flex items-center justify-center border border-purple-200 min-h-[50px] min-w-[50px]"
+        class="fixed bottom-4 right-4 z-50 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm p-2 rounded-full shadow-md active:scale-90 transition-all flex items-center justify-center border border-purple-200/50 dark:border-purple-500/30 hover:shadow-lg"
         onclick="toggleMusic()">
-        <span class="material-symbols-outlined text-purple-600 dark:text-purple-200 animate-pulse"
-            id="music-icon">play_arrow</span>
+        <span class="material-symbols-outlined text-purple-600 dark:text-purple-300 text-lg"
+            id="music-icon">volume_up</span>
     </button>
 
     <!-- Full Screen Finale Container -->
@@ -522,19 +531,35 @@
 
         function copyText(btn, text) {
             navigator.clipboard.writeText(text).then(() => {
-                // No Alert! Only visual feedback on button
+                // Visual feedback with animation
                 const icon = btn.querySelector('span');
                 const originalIcon = icon.innerText;
+                const originalBg = btn.style.backgroundColor;
                 
-                icon.innerText = 'check';
-                icon.classList.add('text-green-400');
+                // Immediate visual feedback with transform and color
+                btn.style.transform = 'scale(1.15)';
+                btn.style.backgroundColor = 'rgb(134, 239, 172)'; // green-300
+                btn.style.transition = 'all 0.2s ease';
                 
+                // Change icon to checkmark
+                icon.innerText = 'check_circle';
+                icon.style.color = 'rgb(22, 101, 52)'; // green-800
+                
+                // Reset after 1.5 seconds
                 setTimeout(() => {
+                    btn.style.transform = 'scale(1)';
+                    btn.style.backgroundColor = originalBg;
                     icon.innerText = originalIcon;
-                    icon.classList.remove('text-green-400');
-                }, 2000);
+                    icon.style.color = '';
+                }, 1500);
             }).catch(err => {
                 console.error('Failed to copy: ', err);
+                // Error feedback
+                const icon = btn.querySelector('span');
+                icon.innerText = 'error';
+                setTimeout(() => {
+                    icon.innerText = 'content_copy';
+                }, 1000);
             });
         }
     </script>

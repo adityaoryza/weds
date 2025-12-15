@@ -235,13 +235,13 @@ async function toggleMusic() {
     if (bgMusic.paused) {
         try {
             await bgMusic.play();
-            document.getElementById('music-icon').innerText = 'pause';
+            document.getElementById('music-icon').innerText = 'volume_up';
         } catch (e) {
             console.log("Audio play failed (user interaction needed):", e);
         }
     } else {
         bgMusic.pause();
-        document.getElementById('music-icon').innerText = 'play_arrow';
+        document.getElementById('music-icon').innerText = 'volume_off';
     }
 }
 async function playChime(type) {
