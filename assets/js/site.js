@@ -5,15 +5,15 @@ function handleBodyClick(e) {
     dust.classList.add("magic-dust");
 
     // Randomize Symbol
-    const symbols = ["✨", "★", "⋆", "✧"];
+    const symbols = ["✨", "★", "⋆", "✧", "🌸"];
     dust.innerText = symbols[Math.floor(Math.random() * symbols.length)];
 
     // Position exactly at cursor
     dust.style.left = `${e.pageX}px`;
     dust.style.top = `${e.pageY}px`;
 
-    // Random color from palette
-    const colors = ["#FFD1DC", "#E6E6FA", "#FFD700", "#FFFFFF"];
+    // Random color from palette (Pink & Gold)
+    const colors = ["#FFD1DC", "#FFB7B2", "#E6E6FA", "#FFD700", "#FFFFFF"];
     dust.style.color = colors[Math.floor(Math.random() * colors.length)];
 
     document.body.appendChild(dust);
@@ -29,6 +29,48 @@ document.addEventListener('mousemove', (e) => {
         handleBodyClick(e);
     }
 });
+
+// --- Background Particles ---
+function initParticles() {
+    const container = document.getElementById('particles-container');
+    if (!container) return; // Guard clause
+
+    // Create persistent particles
+    const particleCount = window.innerWidth < 768 ? 15 : 30; // Fewer on mobile
+    
+    for (let i = 0; i < particleCount; i++) {
+        createParticle(container);
+    }
+}
+
+function createParticle(container) {
+    const p = document.createElement('div');
+    p.classList.add('particle');
+    
+    // Random Size
+    const size = Math.random() * 6 + 2;
+    p.style.width = `${size}px`;
+    p.style.height = `${size}px`;
+    
+    // Random Position
+    p.style.left = `${Math.random() * 100}vw`;
+    p.style.top = `${Math.random() * 100}vh`;
+    
+    // Random Opacity
+    p.style.opacity = Math.random() * 0.5 + 0.1;
+    
+    // Color (White or Pinkish)
+    // Color (Theme Aware via CSS Vars)
+    p.style.background = Math.random() > 0.5 ? 'var(--particle-1)' : 'var(--particle-2)';
+    
+    // Animation
+    const duration = Math.random() * 20 + 10;
+    p.style.animation = `drift-right ${duration}s linear infinite`;
+    p.style.animationDelay = `-${Math.random() * 20}s`;
+    
+    container.appendChild(p);
+}
+
 
 // --- Navigation ---
 function toggleMobileMenu() {
@@ -47,22 +89,7 @@ function toggleTheme() {
     const iconName = isNight ? 'bedtime' : 'wb_sunny';
     document.getElementById('theme-icon-desk').innerText = iconName;
     document.getElementById('theme-icon-mobile').innerText = iconName;
-
-    const stars = document.getElementById('stars-layer');
-    stars.classList.toggle('opacity-0', !isNight);
-
-    if (isNight && stars.children.length === 0) {
-        for (let i = 0; i < 60; i++) {
-            const s = document.createElement('div');
-            s.className = 'absolute bg-white rounded-full animate-twinkle';
-            s.style.width = Math.random() * 2 + 1 + 'px';
-            s.style.height = s.style.width;
-            s.style.left = Math.random() * 100 + '%';
-            s.style.top = Math.random() * 100 + '%';
-            s.style.animation = `twinkle ${Math.random() * 2 + 2}s infinite`;
-            stars.appendChild(s);
-        }
-    }
+    
     playChime();
 }
 
@@ -181,26 +208,22 @@ function releaseLantern() {
 }
 
 // --- Audio ---
-let synth;
+let bgMusic = new Audio('assets/music/bgm.mp3');
+bgMusic.loop = true;
+bgMusic.volume = 0.5;
+
 async function toggleMusic() {
-    await Tone.start();
-    if (!synth) {
-        synth = new Tone.PolySynth().toDestination();
-        synth.volume.value = -12;
-        const notes = ["C4", "E4", "G4", "B4"];
-        new Tone.Loop(time => {
-            if (Math.random() > 0.6) synth.triggerAttackRelease(notes[Math.floor(Math.random() * 4)], "4n", time);
-        }, "8n").start(0);
-        Tone.Transport.start();
-        document.getElementById('music-icon').innerText = 'pause';
-    } else {
-        if (Tone.Transport.state === 'started') {
-            Tone.Transport.pause();
-            document.getElementById('music-icon').innerText = 'play_arrow';
-        } else {
-            Tone.Transport.start();
+    // Attempt to play/pause
+    if (bgMusic.paused) {
+        try {
+            await bgMusic.play();
             document.getElementById('music-icon').innerText = 'pause';
+        } catch (e) {
+            console.log("Audio play failed (user interaction needed):", e);
         }
+    } else {
+        bgMusic.pause();
+        document.getElementById('music-icon').innerText = 'play_arrow';
     }
 }
 async function playChime(type) {
@@ -210,57 +233,105 @@ async function playChime(type) {
     s.triggerAttackRelease(type === 'high' ? "C6" : "E5", "8n");
 }
 
-// --- Utils ---
+// --- Utils & Observers ---
+
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+    initParticles();
+    
+    // Intersection Observer for Reveal Animations
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, { threshold: 0.1 }); // Trigger when 10% visible
+    
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+});
+
+// Scroll Progress
 window.addEventListener('scroll', () => {
     const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
     const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    document.getElementById('scroll-progress').style.width = (winScroll / height) * 100 + "%";
-
-    document.querySelectorAll('.reveal').forEach(el => {
-        if (el.getBoundingClientRect().top < window.innerHeight * 0.85) el.classList.add('active');
-    });
+    // Optional: Add a scroll progress bar if element exists
+    const progressEl = document.getElementById('scroll-progress');
+    if(progressEl) progressEl.style.width = (winScroll / height) * 100 + "%";
 });
 
 // Countdown
-const date = new Date("Aug 24, 2025 16:00:00").getTime();
+const date = new Date("Jan 24, 2026 16:00:00").getTime();
 setInterval(() => {
     const now = new Date().getTime();
     const d = Math.floor((date - now) / (1000 * 60 * 60 * 24));
     const h = Math.floor(((date - now) % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const m = Math.floor(((date - now) % (1000 * 60 * 60)) / (1000 * 60));
+    const s = Math.floor(((date - now) % (1000 * 60)) / 1000);
+
+    const boxClass = "glass flex-1 min-w-0 py-2 md:w-24 md:py-0 md:h-28 rounded-xl flex flex-col items-center justify-center border border-pink-200 dark:border-purple-500 shadow-sm md:shadow-lg backdrop-blur-md transform transition-all";
+    const numClass = "font-handwriting text-2xl md:text-5xl font-bold text-pink-600 dark:text-pink-300 drop-shadow-sm leading-none";
+    const labelClass = "text-[8px] md:text-xs font-bold tracking-widest text-purple-600 dark:text-purple-200 mt-1 uppercase";
+
     document.getElementById('countdown').innerHTML = `
-                <div class="flex flex-col items-center"><span class="text-4xl font-bold text-purple-600 dark:text-white">${d}</span><span class="text-[10px] uppercase opacity-60">Days</span></div>
-                <div class="flex flex-col items-center"><span class="text-4xl font-bold text-purple-600 dark:text-white">${h}</span><span class="text-[10px] uppercase opacity-60">Hrs</span></div>
-                <div class="flex flex-col items-center"><span class="text-4xl font-bold text-purple-600 dark:text-white">${m}</span><span class="text-[10px] uppercase opacity-60">Mins</span></div>
-            `;
+        <div class="${boxClass} animate-float-slow">
+            <span class="${numClass}">${d}</span>
+            <span class="${labelClass}">Hari</span>
+        </div>
+        <div class="${boxClass} animate-float-medium" style="animation-delay: 0.2s">
+            <span class="${numClass}">${h}</span>
+            <span class="${labelClass}">Jam</span>
+        </div>
+        <div class="${boxClass} animate-float-slow" style="animation-delay: 0.4s">
+            <span class="${numClass}">${m}</span>
+            <span class="${labelClass}">Menit</span>
+        </div>
+        <div class="${boxClass} animate-float-medium" style="animation-delay: 0.6s">
+            <span class="${numClass}">${s}</span>
+            <span class="${labelClass}">Detik</span>
+        </div>
+    `;
 }, 1000);
 
-// RSVP
-function toggleGuestInput(show) {
-    const el = document.getElementById('guest-section');
-    if (show) el.classList.remove('hidden');
-    else el.classList.add('hidden');
-}
-function handleRSVP(e) {
+// RSVP Form Logic
+function submitRSVP(e) {
     e.preventDefault();
-    const btn = e.target.querySelector('button');
-    btn.innerText = 'Sending...';
+    const btn = e.target.querySelector('button[type="submit"]');
+    
+    // Loading state
+    btn.disabled = true;
+    btn.innerHTML = '<span class="material-symbols-outlined animate-spin">refresh</span> Sending...';
+    btn.classList.add('opacity-80', 'cursor-not-allowed');
+
+    // Simulate API call
     setTimeout(() => {
-        document.getElementById('rsvp-form').classList.add('hidden');
-        document.getElementById('rsvp-success').classList.remove('hidden');
-        createConfetti(window.innerWidth / 2, window.innerHeight / 2, 60);
+        // 1. Audio & Visual Feedback
+        playChime('high');
+        createConfetti(window.innerWidth / 2, window.innerHeight / 2, 50);
+
+        // 2. Change Form Content to Success Message
+        const container = e.target.closest('.glass');
+        container.innerHTML = `
+            <div class="text-center py-12 flex flex-col items-center animate-sparkle-fade">
+                <div class="text-6xl mb-4 animate-bounce">💌</div>
+                <h3 class="text-4xl font-handwriting text-purple-800 dark:text-white mb-2">Message Sent!</h3>
+                <p class="opacity-80 max-w-sm mx-auto mb-6">Your response has been delivered to the stars. Thank you for being part of our fairytale.</p>
+                <button onclick="location.reload()" class="text-pink-500 font-bold hover:underline text-sm uppercase tracking-widest">
+                    Send another response
+                </button>
+            </div>
+        `;
     }, 1500);
 }
 
-// Init Map
+// RSVP & Map
 async function initMap() {
     const { Map } = await google.maps.importLibrary("maps");
     const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
-    const pos = { lat: 34.0927, lng: -118.8055 };
+    const pos = { lat: -7.7956, lng: 110.3695 }; // Yogyakarta
     const map = new Map(document.getElementById("map"), {
-        center: pos, zoom: 14, mapId: "DEMO_MAP_ID", disableDefaultUI: true
+        center: pos, zoom: 12, mapId: "DEMO_MAP_ID", disableDefaultUI: true
     });
     const pin = new PinElement({ background: "#d8b4fe", borderColor: "#fff", glyphColor: "#fff" });
     new AdvancedMarkerElement({ map, position: pos, content: pin.element });
 }
-// initMap();
