@@ -187,7 +187,7 @@ function triggerGrandFinale() {
     setTimeout(() => {
         container.classList.add('hidden');
         // Reset container content
-        container.innerHTML = '<div class="absolute inset-0 bg-black/40 transition-opacity duration-1000" id="finale-overlay"></div><div class="absolute inset-0 flex items-center justify-center"><div class="text-center transform scale-0 transition-transform duration-1000" id="finale-message"><h2 class="text-6xl md:text-8xl font-handwriting text-white drop-shadow-[0_0_20px_rgba(255,215,0,0.8)]">Magic Unlocked!</h2><p class="text-white text-xl mt-4 font-bold tracking-widest uppercase">The wedding is blessed</p></div></div>';
+        container.innerHTML = '<div class="absolute inset-0 bg-black/40 transition-opacity duration-1000" id="finale-overlay"></div><div class="absolute inset-0 flex items-center justify-center"><div class="text-center transform scale-0 transition-transform duration-1000" id="finale-message"></div></div>';
     }, 14000);
 }
 
