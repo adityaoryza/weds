@@ -262,6 +262,7 @@ async function playChime(type) {
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
     initParticles();
+    renderGuestBook();
 
     // Intersection Observer for Reveal Animations
     const observer = new IntersectionObserver((entries) => {
@@ -318,9 +319,77 @@ setInterval(() => {
 }, 1000);
 
 // RSVP Form Logic
+function toggleGuestCount(input) {
+    const container = document.getElementById('guest-count-container');
+    if (input.value === 'accept') {
+        container.classList.remove('hidden');
+    } else {
+        container.classList.add('hidden');
+    }
+}
+
+// Dummy Guest Book Data
+const guestBookData = [
+    { name: "Putri & Dimas", message: "Congratulations lovebirds! 🦄 Can't wait on the big day!", date: "2 mins ago", attendance: "accept", guestCount: 2 },
+    { name: "Auntie Sarah", message: "So happy for you both. May your life be filled with magic. ✨", date: "1 hour ago", attendance: "accept", guestCount: 1 },
+    { name: "Budi Santoso", message: "Maaf tidak bisa hadir, tapi doa kami menyertai kalian. 🐸", date: "3 hours ago", attendance: "decline", guestCount: 0 }
+];
+
+function renderGuestBook() {
+    const list = document.getElementById('guest-book-list');
+    if (!list) return;
+
+    list.innerHTML = guestBookData.map(entry => {
+        const guestText = entry.attendance === 'accept' && entry.guestCount
+            ? `<span class="font-normal text-xs text-purple-600 dark:text-purple-300 ml-1">- ${entry.guestCount} ${entry.guestCount > 1 ? 'People' : 'Person'}</span>`
+            : '';
+
+        return `
+        <div class="p-4 rounded-xl bg-purple-50 dark:bg-white/5 border border-purple-100 dark:border-white/10 animate-sparkle-fade">
+            <div class="flex justify-between items-start mb-2">
+                <div>
+                    <h4 class="font-bold text-sm text-purple-900 dark:text-purple-200">
+                        ${entry.name}
+                        ${guestText}
+                    </h4>
+                    <span class="text-[10px] text-gray-500 uppercase tracking-widest">${entry.date}</span>
+                </div>
+                <div class="text-xl" title="${entry.attendance === 'accept' ? 'Attending' : 'Not Attending'}">
+                    ${entry.attendance === 'accept' ? '🦄' : '🐸'}
+                </div>
+            </div>
+            <p class="text-sm text-gray-700 dark:text-gray-300 italic">"${entry.message}"</p>
+        </div>
+    `}).join('');
+}
+
 function submitRSVP(e) {
     e.preventDefault();
     const btn = e.target.querySelector('button[type="submit"]');
+
+    // Get Form Data
+    const form = e.target;
+    // Basic extraction since we aren't using a real backend
+    const firstName = form.querySelector('input[placeholder*="Prince"]').value;
+    const lastName = form.querySelector('input[placeholder*="Charming"]').value;
+    const attendance = form.querySelector('input[name="attendance"]:checked').value;
+    const message = form.querySelector('textarea[name="message"]').value;
+
+    // Get Guest Count safely
+    let guestCount = 0;
+    if (attendance === 'accept') {
+        const guestCountInput = form.querySelector('input[name="guest_count"]:checked');
+        if (guestCountInput) {
+            // Handle "5+" as just 5 for display, or keep it as string if preferred.
+            // Parsing to integer for plurality check logic.
+            guestCount = parseInt(guestCountInput.value) || 0;
+            // Special handling for the "5+" case if needed, but parseInt handles "5" fine.
+            if (guestCountInput.value === '5+') guestCount = 5;
+        } else {
+            // Fallback for default selected
+            guestCount = 1;
+        }
+    }
 
     // Loading state
     btn.disabled = true;
@@ -333,18 +402,41 @@ function submitRSVP(e) {
         playChime('high');
         createConfetti(window.innerWidth / 2, window.innerHeight / 2, 50);
 
-        // 2. Change Form Content to Success Message
+        // 2. Add to Guest Book (Simulate persistence)
+        if (message) {
+            guestBookData.unshift({
+                name: `${firstName} ${lastName}`,
+                message: message,
+                date: "Just now",
+                attendance: attendance,
+                guestCount: guestCount
+            });
+            renderGuestBook();
+        }
+
+        // 3. Change Form Content to Success Message
         const container = e.target.closest('.glass');
+        // Only replace the FORM content, not the whole section if possible,
+        // but here the container is the glass card wrapping the form.
         container.innerHTML = `
             <div class="text-center py-12 flex flex-col items-center animate-sparkle-fade">
                 <div class="text-6xl mb-4 animate-bounce">💌</div>
                 <h3 class="text-4xl font-handwriting text-purple-800 dark:text-white mb-2">Message Sent!</h3>
                 <p class="opacity-80 max-w-sm mx-auto mb-6">Your response has been delivered to the stars. Thank you for being part of our fairytale.</p>
+                <div class="bg-purple-100 dark:bg-purple-900/50 px-4 py-2 rounded-lg text-xs font-bold text-purple-700 dark:text-purple-300 mb-6">
+                    See your wish below! 👇
+                </div>
                 <button onclick="location.reload()" class="text-pink-500 font-bold hover:underline text-sm uppercase tracking-widest">
                     Send another response
                 </button>
             </div>
         `;
+
+        // Scroll to guest book to show the new message
+        setTimeout(() => {
+            document.getElementById('guest-book-section').scrollIntoView({ behavior: 'smooth' });
+        }, 500);
+
     }, 1500);
 }
 

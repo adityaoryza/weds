@@ -82,11 +82,7 @@
             <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/40"></div>
         </div>
         <div class="relative z-10 text-center px-6 space-y-6 animate-float-slow">
-            <!-- Decorative floating elements -->
-            <div class="absolute -top-20 -left-20 text-4xl animate-bounce delay-700 opacity-50 pointer-events-none">✨
-            </div>
-            <div class="absolute top-10 -right-20 text-3xl animate-pulse delay-300 opacity-50 pointer-events-none">💖
-            </div>
+            <!-- Decorative floating elements removed -->
 
             <p class="font-title tracking-[0.3em] text-sm md:text-xl uppercase animate-pulse">The Wedding Of</p>
             <h1
@@ -540,7 +536,8 @@
                         <div class="grid grid-cols-2 gap-4">
                             <!-- Accept -->
                             <label class="relative cursor-pointer group">
-                                <input type="radio" name="attendance" value="accept" class="peer sr-only" required>
+                                <input type="radio" name="attendance" value="accept" class="peer sr-only" required
+                                    onchange="toggleGuestCount(this)">
                                 <div
                                     class="h-full p-4 rounded-xl border-2 border-purple-100 dark:border-white/10 text-center transition-all peer-checked:border-pink-500 peer-checked:bg-pink-50 dark:peer-checked:bg-pink-900/30 hover:border-pink-300 group-hover:shadow-md flex flex-col items-center justify-center gap-2">
                                     <div
@@ -552,7 +549,8 @@
                             </label>
                             <!-- Decline -->
                             <label class="relative cursor-pointer group">
-                                <input type="radio" name="attendance" value="decline" class="peer sr-only" required>
+                                <input type="radio" name="attendance" value="decline" class="peer sr-only" required
+                                    onchange="toggleGuestCount(this)">
                                 <div
                                     class="h-full p-4 rounded-xl border-2 border-purple-100 dark:border-white/10 text-center transition-all peer-checked:border-gray-500 peer-checked:bg-gray-50 dark:peer-checked:bg-gray-800 hover:border-gray-300 group-hover:shadow-md flex flex-col items-center justify-center gap-2">
                                     <div class="text-3xl group-hover:grayscale transition-all">🐸</div>
@@ -563,13 +561,62 @@
                         </div>
                     </div>
 
+                    <!-- Guest Count (Hidden by default) -->
+                    <div id="guest-count-container" class="hidden space-y-2 animate-sparkle-fade">
+                        <label
+                            class="font-bold text-xs uppercase tracking-widest text-gray-700 dark:text-gray-300 ml-1">Number
+                            of Guests</label>
+                        <div class="flex flex-wrap gap-2">
+                            <!-- 1 Person -->
+                            <label class="cursor-pointer flex-1 min-w-[30%] sm:min-w-0">
+                                <input type="radio" name="guest_count" value="1" class="peer sr-only" checked>
+                                <div
+                                    class="px-3 py-2 rounded-xl border border-purple-200 dark:border-white/10 text-center text-sm font-bold text-gray-600 dark:text-gray-300 transition-all hover:border-pink-300 peer-checked:bg-pink-500 peer-checked:text-white peer-checked:border-pink-500 peer-checked:shadow-md bg-white/50 dark:bg-white/5">
+                                    1
+                                </div>
+                            </label>
+                            <!-- 2 People -->
+                            <label class="cursor-pointer flex-1 min-w-[30%] sm:min-w-0">
+                                <input type="radio" name="guest_count" value="2" class="peer sr-only">
+                                <div
+                                    class="px-3 py-2 rounded-xl border border-purple-200 dark:border-white/10 text-center text-sm font-bold text-gray-600 dark:text-gray-300 transition-all hover:border-pink-300 peer-checked:bg-pink-500 peer-checked:text-white peer-checked:border-pink-500 peer-checked:shadow-md bg-white/50 dark:bg-white/5">
+                                    2
+                                </div>
+                            </label>
+                            <!-- 3 People -->
+                            <label class="cursor-pointer flex-1 min-w-[30%] sm:min-w-0">
+                                <input type="radio" name="guest_count" value="3" class="peer sr-only">
+                                <div
+                                    class="px-3 py-2 rounded-xl border border-purple-200 dark:border-white/10 text-center text-sm font-bold text-gray-600 dark:text-gray-300 transition-all hover:border-pink-300 peer-checked:bg-pink-500 peer-checked:text-white peer-checked:border-pink-500 peer-checked:shadow-md bg-white/50 dark:bg-white/5">
+                                    3
+                                </div>
+                            </label>
+                            <!-- 4 People -->
+                            <label class="cursor-pointer flex-1 min-w-[30%] sm:min-w-0">
+                                <input type="radio" name="guest_count" value="4" class="peer sr-only">
+                                <div
+                                    class="px-3 py-2 rounded-xl border border-purple-200 dark:border-white/10 text-center text-sm font-bold text-gray-600 dark:text-gray-300 transition-all hover:border-pink-300 peer-checked:bg-pink-500 peer-checked:text-white peer-checked:border-pink-500 peer-checked:shadow-md bg-white/50 dark:bg-white/5">
+                                    4
+                                </div>
+                            </label>
+                            <!-- 5+ People -->
+                            <label class="cursor-pointer flex-1 min-w-[30%] sm:min-w-0">
+                                <input type="radio" name="guest_count" value="5+" class="peer sr-only">
+                                <div
+                                    class="px-3 py-2 rounded-xl border border-purple-200 dark:border-white/10 text-center text-sm font-bold text-gray-600 dark:text-gray-300 transition-all hover:border-pink-300 peer-checked:bg-pink-500 peer-checked:text-white peer-checked:border-pink-500 peer-checked:shadow-md bg-white/50 dark:bg-white/5">
+                                    5+
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
                     <!-- Message of Happiness -->
                     <div class="space-y-2">
                         <label
                             class="font-bold text-xs uppercase tracking-widest text-gray-700 dark:text-gray-300 ml-1">Message
                             of Happiness</label>
-                        <textarea placeholder="Write your magical wishes for the couple..." rows="3"
-                            class="w-full px-4 py-3 rounded-xl bg-purple-50 dark:bg-white/5 border border-purple-100 dark:border-white/10 focus:border-pink-400 focus:ring-2 focus:ring-pink-200 dark:focus:ring-pink-900 outline-none transition-all placeholder:text-gray-400"></textarea>
+                        <textarea name="message" placeholder="Write your magical wishes for the couple..." rows="3"
+                            class="w-full px-4 py-3 rounded-xl bg-purple-50 dark:bg-white/5 border border-purple-100 dark:border-white/10 focus:border-pink-400 focus:ring-2 focus:ring-pink-200 dark:focus:ring-pink-900 outline-none transition-all placeholder:text-gray-400 text-base"></textarea>
                     </div>
 
                     <!-- Submit Button -->
@@ -581,8 +628,20 @@
                     </button>
                 </form>
 
-                <!-- Hidden Unicorn #5 (Inside RSVP container, clearly visible) -->
-                <div class="hidden-unicorn top-10 right-10 z-30 scale-110 animate-pulse" onclick="foundUnicorn(this)">🦄
+                <!-- Hidden Unicorn #5 (Inside RSVP container, moved to bottom right to avoid overlap) -->
+                <div class="hidden-unicorn bottom-4 right-4 z-30 scale-110 animate-pulse" onclick="foundUnicorn(this)">
+                    🦄
+                </div>
+            </div>
+
+            <!-- Guest Book / Wishes Section -->
+            <div id="guest-book-section" class="mt-12 reveal">
+                <div class="glass bg-white/95 dark:bg-slate-900/90 p-8 rounded-[2rem] border border-white/40 shadow-xl">
+                    <h3 class="text-3xl font-handwriting text-center text-purple-800 dark:text-purple-200 mb-8">Wishes
+                        from the Stars</h3>
+                    <div id="guest-book-list" class="space-y-4 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
+                        <!-- Populated by JS -->
+                    </div>
                 </div>
             </div>
         </div>
