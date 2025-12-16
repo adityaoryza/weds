@@ -298,6 +298,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
+    // Skeleton Loading Handler
+    const handleImageLoad = (img) => {
+        const wrapper = img.closest('.skeleton-wrapper');
+        if (wrapper) {
+            wrapper.classList.add('loaded');
+        }
+    };
+
+    // Handle all images with skeleton wrappers
+    document.querySelectorAll('.skeleton-wrapper img').forEach(img => {
+        if (img.complete) {
+            // Image already loaded (cached)
+            handleImageLoad(img);
+        } else {
+            // Wait for image to load
+            img.addEventListener('load', () => handleImageLoad(img));
+            img.addEventListener('error', () => {
+                // Even on error, remove skeleton to show broken image icon
+                handleImageLoad(img);
+            });
+        }
+    });
+
     // Typewriter Effect for Verse
     const verse = document.getElementById('verse-text');
     if (verse) {

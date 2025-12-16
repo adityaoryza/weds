@@ -481,3 +481,115 @@
             border-radius: 50%;
             pointer-events: none;
         }
+
+        /* --- Skeleton Loading Styles --- */
+        .skeleton {
+            background: linear-gradient(
+                90deg,
+                rgba(200, 200, 200, 0.2) 25%,
+                rgba(220, 220, 220, 0.3) 50%,
+                rgba(200, 200, 200, 0.2) 75%
+            );
+            background-size: 200% 100%;
+            animation: skeleton-shimmer 1.5s ease-in-out infinite;
+            border-radius: inherit;
+        }
+
+        body.night-mode .skeleton,
+        body.dark .skeleton {
+            background: linear-gradient(
+                90deg,
+                rgba(50, 50, 70, 0.3) 25%,
+                rgba(70, 70, 90, 0.4) 50%,
+                rgba(50, 50, 70, 0.3) 75%
+            );
+            background-size: 200% 100%;
+        }
+
+        @keyframes skeleton-shimmer {
+            0% {
+                background-position: 200% 0;
+            }
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        /* Skeleton for images */
+        .skeleton-image {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(
+                90deg,
+                #e0e0e0 25%,
+                #f0f0f0 50%,
+                #e0e0e0 75%
+            );
+            background-size: 200% 100%;
+            animation: skeleton-shimmer 1.5s ease-in-out infinite;
+        }
+
+        body.night-mode .skeleton-image,
+        body.dark .skeleton-image {
+            background: linear-gradient(
+                90deg,
+                #2a2a3e 25%,
+                #3a3a4e 50%,
+                #2a2a3e 75%
+            );
+            background-size: 200% 100%;
+        }
+
+        /* Hide skeleton when image is loaded */
+        .skeleton-image.loaded {
+            animation: none;
+            background: transparent;
+        }
+
+        /* Smooth fade-in for loaded images */
+        .skeleton-image img {
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .skeleton-image.loaded img {
+            opacity: 1;
+        }
+
+        /* Skeleton wrapper for maintaining aspect ratio */
+        .skeleton-wrapper {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skeleton-wrapper::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                90deg,
+                rgba(200, 200, 200, 0.2) 25%,
+                rgba(220, 220, 220, 0.3) 50%,
+                rgba(200, 200, 200, 0.2) 75%
+            );
+            background-size: 200% 100%;
+            animation: skeleton-shimmer 1.5s ease-in-out infinite;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .skeleton-wrapper.loaded::before {
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        body.night-mode .skeleton-wrapper::before,
+        body.dark .skeleton-wrapper::before {
+            background: linear-gradient(
+                90deg,
+                rgba(50, 50, 70, 0.3) 25%,
+                rgba(70, 70, 90, 0.4) 50%,
+                rgba(50, 50, 70, 0.3) 75%
+            );
+            background-size: 200% 100%;
+        }
