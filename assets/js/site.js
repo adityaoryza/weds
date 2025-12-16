@@ -276,13 +276,32 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 });
 
-// Scroll Progress
+// Scroll Progress & Navbar/Audio Toggle
 window.addEventListener('scroll', () => {
     const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
     const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
     // Optional: Add a scroll progress bar if element exists
     const progressEl = document.getElementById('scroll-progress');
     if (progressEl) progressEl.style.width = (winScroll / height) * 100 + "%";
+
+    // Navbar & Audio Button Toggle
+    const navbar = document.getElementById('navbar');
+    const audioBtn = document.getElementById('audio-btn');
+
+    // Trigger when user has scrolled 75% of the viewport height (close to 2nd page)
+    if (winScroll > window.innerHeight * 0.75) {
+        // Show
+        if (navbar) navbar.classList.remove('-translate-y-full');
+        if (audioBtn) {
+            audioBtn.classList.remove('translate-y-24', 'opacity-0');
+        }
+    } else {
+        // Hide
+        if (navbar) navbar.classList.add('-translate-y-full');
+        if (audioBtn) {
+            audioBtn.classList.add('translate-y-24', 'opacity-0');
+        }
+    }
 });
 
 // Countdown
