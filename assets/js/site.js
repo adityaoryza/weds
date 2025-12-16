@@ -37,7 +37,7 @@ function initParticles() {
 
     // Create persistent particles
     const particleCount = window.innerWidth < 768 ? 15 : 30; // Fewer on mobile
-    
+
     for (let i = 0; i < particleCount; i++) {
         createParticle(container);
     }
@@ -46,28 +46,28 @@ function initParticles() {
 function createParticle(container) {
     const p = document.createElement('div');
     p.classList.add('particle');
-    
+
     // Random Size
     const size = Math.random() * 6 + 2;
     p.style.width = `${size}px`;
     p.style.height = `${size}px`;
-    
+
     // Random Position
     p.style.left = `${Math.random() * 100}vw`;
     p.style.top = `${Math.random() * 100}vh`;
-    
+
     // Random Opacity
     p.style.opacity = Math.random() * 0.5 + 0.1;
-    
+
     // Color (White or Pinkish)
     // Color (Theme Aware via CSS Vars)
     p.style.background = Math.random() > 0.5 ? 'var(--particle-1)' : 'var(--particle-2)';
-    
+
     // Animation
     const duration = Math.random() * 20 + 10;
     p.style.animation = `drift-right ${duration}s linear infinite`;
     p.style.animationDelay = `-${Math.random() * 20}s`;
-    
+
     container.appendChild(p);
 }
 
@@ -89,7 +89,7 @@ function toggleTheme() {
     const iconName = isNight ? 'bedtime' : 'wb_sunny';
     document.getElementById('theme-icon-desk').innerText = iconName;
     document.getElementById('theme-icon-mobile').innerText = iconName;
-    
+
     playChime();
 }
 
@@ -153,8 +153,13 @@ function triggerGrandFinale() {
         l.style.left = Math.random() * 100 + '%';
         l.style.bottom = '-100px';
         l.style.transform = `scale(${0.5 + Math.random()})`;
-        l.style.animation = `floatUp ${5 + Math.random() * 5}s linear forwards`;
+
+        const duration = 5 + Math.random() * 5;
+        l.style.animation = `floatUp ${duration}s linear forwards`;
         container.appendChild(l);
+
+        // Self-cleanup individual lanterns
+        setTimeout(() => l.remove(), duration * 1000);
     }, 100);
 
     // 2. Confetti Storm
@@ -166,23 +171,24 @@ function triggerGrandFinale() {
     playChime('high');
     setTimeout(() => playChime('high'), 500);
 
-    // 4. Cleanup after 8 seconds
+    // 4. Stop creating new elements after 3 seconds (Burst effect)
     setTimeout(() => {
         clearInterval(lanternInterval);
         clearInterval(confettiInterval);
-        
-        // Formatting exit
+    }, 3000);
+
+    // 5. Hide UI Message & Overlay after 6 seconds (let lanterns keep floating)
+    setTimeout(() => {
         msg.classList.add('scale-0'); // Shrink message
         if (overlay) overlay.classList.add('opacity-0'); // Fade out black overlay
-        
-        // Wait for transitions to finish before hiding container
-        setTimeout(() => {
-            container.classList.add('hidden');
-            // Clean/Reset container content while keeping structure if needed
-            // But main purpose is achieved: no alert, smooth fade.
-            container.innerHTML = '<div class="absolute inset-0 bg-black/40 transition-opacity duration-1000" id="finale-overlay"></div><div class="absolute inset-0 flex items-center justify-center"><div class="text-center transform scale-0 transition-transform duration-1000" id="finale-message"><h2 class="text-6xl md:text-8xl font-handwriting text-white drop-shadow-[0_0_20px_rgba(255,215,0,0.8)]">Magic Unlocked!</h2><p class="text-white text-xl mt-4 font-bold tracking-widest uppercase">The wedding is blessed</p></div></div>';
-        }, 1000);
-    }, 8000);
+    }, 6000);
+
+    // 6. Final Cleanup after 14 seconds (when all lanterns are gone)
+    setTimeout(() => {
+        container.classList.add('hidden');
+        // Reset container content
+        container.innerHTML = '<div class="absolute inset-0 bg-black/40 transition-opacity duration-1000" id="finale-overlay"></div><div class="absolute inset-0 flex items-center justify-center"><div class="text-center transform scale-0 transition-transform duration-1000" id="finale-message"><h2 class="text-6xl md:text-8xl font-handwriting text-white drop-shadow-[0_0_20px_rgba(255,215,0,0.8)]">Magic Unlocked!</h2><p class="text-white text-xl mt-4 font-bold tracking-widest uppercase">The wedding is blessed</p></div></div>';
+    }, 14000);
 }
 
 function createConfetti(x, y, count = 12) {
@@ -256,7 +262,7 @@ async function playChime(type) {
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
     initParticles();
-    
+
     // Intersection Observer for Reveal Animations
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -265,7 +271,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }, { threshold: 0.1 }); // Trigger when 10% visible
-    
+
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 });
 
@@ -275,7 +281,7 @@ window.addEventListener('scroll', () => {
     const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
     // Optional: Add a scroll progress bar if element exists
     const progressEl = document.getElementById('scroll-progress');
-    if(progressEl) progressEl.style.width = (winScroll / height) * 100 + "%";
+    if (progressEl) progressEl.style.width = (winScroll / height) * 100 + "%";
 });
 
 // Countdown
@@ -315,7 +321,7 @@ setInterval(() => {
 function submitRSVP(e) {
     e.preventDefault();
     const btn = e.target.querySelector('button[type="submit"]');
-    
+
     // Loading state
     btn.disabled = true;
     btn.innerHTML = '<span class="material-symbols-outlined animate-spin">refresh</span> Sending...';
