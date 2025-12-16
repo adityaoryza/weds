@@ -404,7 +404,16 @@
                     <div class="relative z-10 glass p-6 rounded-xl">
                         <h3 class="font-bold text-xl mb-2">Yogyakarta</h3>
                         <p class="text-sm opacity-80 mb-4">Special Region of Yogyakarta, Indonesia</p>
-                        <a href="https://www.google.com/maps/search/?api=1&query=Yogyakarta" target="_blank"
+                        <!-- Map Preview -->
+                        <div
+                            class="w-full h-48 md:h-64 rounded-xl overflow-hidden shadow-lg mb-6 border border-white/20">
+                            <iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0"
+                                marginwidth="0"
+                                src="https://maps.google.com/maps?q=Ndalem+Sorogenen+Guesthouse&t=&z=15&ie=UTF8&iwloc=&output=embed">
+                            </iframe>
+                        </div>
+
+                        <a href="https://maps.app.goo.gl/Z6HqXDfowoJCGZxi8" target="_blank"
                             class="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-full font-bold shadow-lg hover:bg-blue-700 transition-colors min-h-[44px]">
                             <span class="material-symbols-outlined">map</span>
                             Buka di Google Maps
@@ -450,14 +459,9 @@
 
                 <!-- Hidden Unicorn #1 (Moved into flow, absolute positioning relative to nearest relative parent) -->
                 <!-- We'll keep the unicorn floating freely near the top for safety -->
-                <div class="absolute top-0 right-10 hidden-unicorn z-30 scale-125 animate-float"
+                <div class="absolute top-2 right-10 hidden-unicorn z-30 text-4xl cursor-pointer animate-float hover:scale-125 transition-transform"
                     onclick="foundUnicorn(this)">
-                    <svg viewBox="0 0 24 24"
-                        class="w-8 h-8 fill-current text-pink-400 opacity-60 hover:opacity-100 transition-opacity"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M12 2C12 2 11.5 2 11 2.5C10.5 3 9.5 4.5 9.5 4.5L8.5 4L9 6C9 6 6 8.5 6 11C6 13.5 8 15.5 8 15.5V22H11V18H13V22H16V15.5C16 15.5 18 13.5 18 11C18 10 17.5 9 17.5 9L18 7L16.5 7.5C16.5 7.5 15.5 4.5 14.5 3.5C13.5 2.5 12 2 12 2Z" />
-                    </svg>
+                    🦄
                 </div>
 
                 <!-- Card 1: Cake -->
