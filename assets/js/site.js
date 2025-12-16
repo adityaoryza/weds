@@ -411,12 +411,16 @@ function toggleGuestCount(input) {
     }
 }
 
-// Dummy Guest Book Data
-const guestBookData = [
+// Guest Book Data with Persistence
+const defaultGuestBookData = [
     { name: "Putri & Dimas", message: "Congratulations lovebirds! 🦄 Can't wait on the big day!", date: "2 mins ago", attendance: "accept", guestCount: 2 },
     { name: "Auntie Sarah", message: "So happy for you both. May your life be filled with magic. ✨", date: "1 hour ago", attendance: "accept", guestCount: 1 },
     { name: "Budi Santoso", message: "Maaf tidak bisa hadir, tapi doa kami menyertai kalian. 🐸", date: "3 hours ago", attendance: "decline", guestCount: 0 }
 ];
+
+// Load from localStorage or use defaults
+let savedGuestBook = localStorage.getItem('weddingGuestBook');
+let guestBookData = savedGuestBook ? JSON.parse(savedGuestBook) : defaultGuestBookData;
 
 function renderGuestBook() {
     const list = document.getElementById('guest-book-list');
@@ -485,7 +489,7 @@ function submitRSVP(e) {
         playChime('high');
         createConfetti(window.innerWidth / 2, window.innerHeight / 2, 50);
 
-        // 2. Add to Guest Book (Simulate persistence)
+        // 2. Add to Guest Book (Persistence Implemented)
         if (message) {
             guestBookData.unshift({
                 name: `${firstName} ${lastName}`,
@@ -494,6 +498,8 @@ function submitRSVP(e) {
                 attendance: attendance,
                 guestCount: guestCount
             });
+            // Save to localStorage
+            localStorage.setItem('weddingGuestBook', JSON.stringify(guestBookData));
             renderGuestBook();
         }
 
