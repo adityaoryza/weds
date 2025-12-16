@@ -244,16 +244,24 @@ async function toggleMusic() {
     if (bgMusic.paused) {
         try {
             await bgMusic.play();
-            // Start spinning and pulsing
-            if (icon) icon.classList.add('animate-spin-slow');
+            // Change to PLAY icon and add pulse animation (music is now playing)
+            if (icon) {
+                icon.src = 'assets/images/play.png';
+                icon.alt = 'Playing Music';
+                icon.classList.add('animate-pulse');
+            }
             if (btn) btn.classList.add('music-playing');
         } catch (e) {
             console.log("Audio play failed (user interaction needed):", e);
         }
     } else {
         bgMusic.pause();
-        // Stop spinning and pulsing
-        if (icon) icon.classList.remove('animate-spin-slow');
+        // Change to PAUSE icon and remove pulse animation (music is now paused)
+        if (icon) {
+            icon.src = 'assets/images/pause.png';
+            icon.alt = 'Music Paused';
+            icon.classList.remove('animate-pulse');
+        }
         if (btn) btn.classList.remove('music-playing');
     }
 }
