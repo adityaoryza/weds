@@ -276,33 +276,40 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 });
 
-// Scroll Progress & Navbar/Audio Toggle
+// Scroll Progress & Navbar/Audio Toggle (Optimized)
+let lastKnownScrollPosition = 0;
+let ticking = false;
+
 window.addEventListener('scroll', () => {
-    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    // Optional: Add a scroll progress bar if element exists
-    const progressEl = document.getElementById('scroll-progress');
-    if (progressEl) progressEl.style.width = (winScroll / height) * 100 + "%";
+    lastKnownScrollPosition = window.scrollY || document.documentElement.scrollTop;
 
-    // Navbar & Audio Button Toggle
-    const navbar = document.getElementById('navbar');
-    const audioBtn = document.getElementById('audio-btn');
+    if (!ticking) {
+        window.requestAnimationFrame(() => {
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
 
-    // Trigger when user has scrolled 75% of the viewport height (close to 2nd page)
-    if (winScroll > window.innerHeight * 0.75) {
-        // Show
-        if (navbar) navbar.classList.remove('-translate-y-full');
-        if (audioBtn) {
-            audioBtn.classList.remove('translate-y-24', 'opacity-0');
-        }
-    } else {
-        // Hide
-        if (navbar) navbar.classList.add('-translate-y-full');
-        if (audioBtn) {
-            audioBtn.classList.add('translate-y-24', 'opacity-0');
-        }
+            // Optional: Scroll Progress
+            const progressEl = document.getElementById('scroll-progress');
+            if (progressEl) progressEl.style.width = (lastKnownScrollPosition / height) * 100 + "%";
+
+            // Navbar & Audio Button Toggle
+            const navbar = document.getElementById('navbar');
+            const audioBtn = document.getElementById('audio-btn');
+
+            // Trigger when user has scrolled 75% of the viewport height
+            if (lastKnownScrollPosition > window.innerHeight * 0.75) {
+                if (navbar) navbar.classList.remove('-translate-y-full');
+                if (audioBtn) audioBtn.classList.remove('translate-y-24', 'opacity-0');
+            } else {
+                if (navbar) navbar.classList.add('-translate-y-full');
+                if (audioBtn) audioBtn.classList.add('translate-y-24', 'opacity-0');
+            }
+
+            ticking = false;
+        });
+
+        ticking = true;
     }
-});
+}, { passive: true });
 
 // Countdown
 const date = new Date("Jan 24, 2026 16:00:00").getTime();
