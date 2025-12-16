@@ -232,7 +232,7 @@ function releaseLantern() {
 }
 
 // --- Audio ---
-let bgMusic = new Audio('assets/music/bgm.mp3');
+let bgMusic = new Audio('assets/music/Nadin.mp3');
 bgMusic.loop = true;
 bgMusic.volume = 0.5;
 

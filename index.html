@@ -23,7 +23,7 @@
     <link rel="icon"
         href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦄</text></svg>">
     <audio id="bg-music" loop>
-        <source src="assets/music.mp3" type="audio/mpeg">
+        <source src="assets/music/Nadin.mp3" type="audio/mpeg">
     </audio>
     <script>
         tailwind.config = {
@@ -344,13 +344,14 @@
             </svg>
         </div>
         <div class="container mx-auto px-4 text-center flex flex-col items-center">
-            <h3 class="font-handwriting text-3xl text-purple-800 dark:text-purple-200 mb-12 relative inline-block">
+            <h3
+                class="font-handwriting text-3xl text-purple-800 dark:text-purple-200 mb-12 relative inline-block reveal">
                 Counting Down The Magic
             </h3>
 
             <!-- Rounded Container for Countdown -->
             <div
-                class="bg-white/40 dark:bg-black/20 backdrop-blur-sm rounded-3xl p-4 md:p-6 shadow-lg border border-purple-200/50 dark:border-purple-500/30 mb-8 max-w-[95vw] w-full">
+                class="bg-white/40 dark:bg-black/20 backdrop-blur-sm rounded-3xl p-4 md:p-6 shadow-lg border border-purple-200/50 dark:border-purple-500/30 mb-8 max-w-[95vw] w-full reveal">
                 <div class="flex flex-nowrap justify-center gap-1.5 md:gap-6 font-title" id="countdown">
                     <!-- Javascript will populate this -->
                 </div>
@@ -485,7 +486,7 @@
             <h2 class="reveal font-handwriting text-5xl text-center text-purple-900 dark:text-white mb-12">
                 Captured Magic</h2>
 
-            <div class="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
+            <div class="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6 reveal">
 
                 <!-- Hidden Unicorn #1 (Moved into flow, absolute positioning relative to nearest relative parent) -->
                 <!-- We'll keep the unicorn floating freely near the top for safety -->
@@ -601,7 +602,7 @@
 
                     <!-- Bank Card -->
                     <div
-                        class="bg-white dark:bg-[#1a103c] rounded-2xl p-6 border border-purple-200 dark:border-white/10 relative text-left shadow-inner group-hover:border-purple-500/30 transition-colors duration-500">
+                        class="bg-white dark:bg-[#1a103c] rounded-2xl p-6 border border-purple-200 dark:border-white/10 relative text-left shadow-inner group-hover:border-purple-500/30 transition-colors duration-500 reveal">
                         <div class="flex justify-between items-start mb-8">
                             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Bank_Central_Asia.svg/1200px-Bank_Central_Asia.svg.png"
                                 class="h-8 bg-white px-2 py-1 rounded shadow-sm object-contain" alt="BCA">
@@ -857,7 +858,7 @@
             <div class="absolute bottom-10 left-[30%] w-1 h-1 bg-white rounded-full animate-ping"></div>
         </div>
 
-        <div class="container mx-auto px-6 relative z-10 flex flex-col items-center">
+        <div class="container mx-auto px-6 relative z-10 flex flex-col items-center reveal">
 
             <!-- Animated Castle SVG -->
             <div class="relative mb-6 group">
