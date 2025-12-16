@@ -260,6 +260,19 @@ async function playChime(type) {
 // --- Utils & Observers ---
 
 // Initialize
+window.addEventListener('load', () => {
+    // Hide Preloader
+    const preloader = document.getElementById('preloader');
+    if (preloader) {
+        setTimeout(() => {
+            preloader.style.opacity = '0';
+            setTimeout(() => {
+                preloader.remove();
+            }, 700); // Wait for transition to finish
+        }, 1000); // Minimum view time
+    }
+});
+
 document.addEventListener('DOMContentLoaded', () => {
     initParticles();
     renderGuestBook();
