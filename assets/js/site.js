@@ -237,17 +237,24 @@ bgMusic.loop = true;
 bgMusic.volume = 0.5;
 
 async function toggleMusic() {
+    const btn = document.getElementById('audio-btn');
+    const icon = document.getElementById('music-icon');
+
     // Attempt to play/pause
     if (bgMusic.paused) {
         try {
             await bgMusic.play();
-            document.getElementById('music-icon').innerText = 'volume_up';
+            // Start spinning and pulsing
+            if (icon) icon.classList.add('animate-spin-slow');
+            if (btn) btn.classList.add('music-playing');
         } catch (e) {
             console.log("Audio play failed (user interaction needed):", e);
         }
     } else {
         bgMusic.pause();
-        document.getElementById('music-icon').innerText = 'volume_off';
+        // Stop spinning and pulsing
+        if (icon) icon.classList.remove('animate-spin-slow');
+        if (btn) btn.classList.remove('music-playing');
     }
 }
 async function playChime(type) {
@@ -287,7 +294,33 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { threshold: 0.1 }); // Trigger when 10% visible
 
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Typewriter Effect for Verse
+    const verse = document.getElementById('verse-text');
+    if (verse) {
+        const text = verse.innerText;
+        verse.innerText = '';
+        verse.style.opacity = '1';
+
+        const typeWriterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    typeWriter(verse, text, 0);
+                    typeWriterObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        typeWriterObserver.observe(verse);
+    }
 });
+
+function typeWriter(element, text, i) {
+    if (i < text.length) {
+        element.innerHTML += text.charAt(i);
+        setTimeout(() => typeWriter(element, text, i + 1), 20); // Speed: 20ms per char
+    }
+}
 
 // Scroll Progress & Navbar/Audio Toggle (Optimized)
 let lastKnownScrollPosition = 0;
@@ -316,6 +349,17 @@ window.addEventListener('scroll', () => {
                 if (navbar) navbar.classList.add('-translate-y-full');
                 if (audioBtn) audioBtn.classList.add('translate-y-24', 'opacity-0');
             }
+
+            // Parallax Effect
+            document.querySelectorAll('.parallax').forEach(el => {
+                const speed = el.getAttribute('data-speed') || 0.5;
+                const rect = el.parentElement.getBoundingClientRect(); // relative to viewport
+                // Simple parallax: move based on scroll, but better to move based on viewport position?
+                // Standard parallax: translateY = scroll * speed.
+                // But since they are absolute in sections, let's just use simple offset.
+                const yPos = -(lastKnownScrollPosition * speed);
+                el.style.transform = `translateY(${yPos}px)`;
+            });
 
             ticking = false;
         });
