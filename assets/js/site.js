@@ -289,6 +289,9 @@ document.addEventListener('DOMContentLoaded', () => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('active');
+            } else {
+                // Ensure re-trigger when scrolling back up
+                entry.target.classList.remove('active');
             }
         });
     }, { threshold: 0.1 }); // Trigger when 10% visible
