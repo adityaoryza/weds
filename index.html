@@ -668,11 +668,44 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12 text-center relative overflow-hidden">
-        <div class="container mx-auto px-6 relative z-10 pb-10">
-            <div class="absolute bottom-4 left-0 w-full animate-move-cloud opacity-20 pointer-events-none text-4xl">🦄
+    <footer
+        class="bg-[#0f0418] text-white pt-24 pb-12 text-center relative overflow-hidden border-t border-purple-900/30">
+        <!-- Background Decor -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+            <div class="absolute top-10 left-[10%] w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
+            <div class="absolute top-20 right-[20%] w-3 h-3 bg-pink-400 rounded-full animate-pulse delay-700"></div>
+            <div class="absolute bottom-10 left-[30%] w-1 h-1 bg-white rounded-full animate-ping"></div>
+        </div>
+
+        <div class="container mx-auto px-6 relative z-10 flex flex-col items-center">
+
+            <!-- Animated Castle SVG -->
+            <div class="relative mb-6 group">
+                <svg class="h-32 w-auto animate-float-slow drop-shadow-[0_0_25px_rgba(168,85,247,0.4)]"
+                    viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Towers -->
+                    <path d="M20 90V50L30 35L40 50V90H20Z" fill="#E9D5FF" />
+                    <path d="M60 90V50L70 35L80 50V90H60Z" fill="#E9D5FF" />
+                    <path d="M35 90V40L50 20L65 40V90H35Z" fill="#D8B4FE" />
+                    <!-- Rooftops -->
+                    <path d="M20 50L30 35L40 50" fill="#C084FC" />
+                    <path d="M60 50L70 35L80 50" fill="#C084FC" />
+                    <path d="M35 40L50 20L65 40" fill="#A855F7" />
+                    <!-- Door -->
+                    <path d="M45 90V75C45 72.2 47.2 70 50 70C52.8 70 55 72.2 55 75V90H45Z" fill="#FDE047"
+                        class="animate-pulse-slow" />
+                    <!-- Flags -->
+                    <path d="M50 20V10" stroke="#FDE047" stroke-width="1" />
+                    <path d="M50 10L55 12.5L50 15V10Z" fill="#F472B6" class="animate-wiggle origin-left" />
+                </svg>
+
+                <!-- Flying Unicorn -->
+                <div class="absolute top-10 -right-40 text-2xl" style="animation: move-cloud 15s linear infinite;">🦄
+                </div>
             </div>
-            <p class="text-xs text-gray-500">© 2026 Irfan &amp; Dhea</p>
+
+            <h3 class="font-handwriting text-3xl text-purple-200 mb-2">Happily Ever After</h3>
+            <p class="text-xs text-gray-500 mt-8">© 2026 Irfan & Dhea</p>
         </div>
     </footer>
 
