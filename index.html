@@ -127,6 +127,10 @@
         </div>
         <div class="relative z-10 text-center px-6 space-y-6 animate-float-slow">
             <!-- Decorative floating elements removed -->
+            <!-- Hidden Unicorn #0 (Cover Page) -->
+            <div class="hidden-unicorn top-10 right-10 z-30 scale-125 animate-pulse" onclick="foundUnicorn(this)">
+                🦄
+            </div>
 
             <p class="font-title tracking-[0.3em] text-sm md:text-xl uppercase animate-pulse">The Wedding Of</p>
             <h1
@@ -456,7 +460,7 @@
     </section>
 
     <!-- Gallery (Vertical Stack Style) -->
-    <section class="py-24 bg-white/50 dark:bg-black/20" id="gallery">
+    <section class="py-24 bg-white/50 dark:bg-black/20 relative" id="gallery">
         <!-- Decorative elements for Gallery Section (Pixel Art) -->
         <div
             class="absolute top-10 left-10 w-16 h-16 text-purple-400 animate-float-slow opacity-80 pointer-events-none">
