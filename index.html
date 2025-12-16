@@ -95,10 +95,25 @@
     <!-- COVER PAGE -->
     <div id="cover-page"
         class="fixed inset-0 z-[100] bg-black text-white flex flex-col items-center justify-center transition-transform duration-1000 ease-in-out">
-        <div class="absolute inset-0 z-0">
-            <img src="assets/images/hero_bg.png" class="w-full h-full object-cover opacity-40" alt="Cover Background">
+        <div class="absolute inset-0 z-0 overflow-hidden">
+            <img src="assets/images/hero_bg.png" class="w-full h-full object-cover opacity-60 animate-ken-burns"
+                alt="Cover Background">
             <!-- Darker overlay to reduce overexposure -->
-            <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/40"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60"></div>
+
+            <!-- Fireflies Container -->
+            <div class="absolute inset-0 pointer-events-none">
+                <div class="absolute w-1 h-1 bg-yellow-400 rounded-full blur-[1px] animate-firefly"
+                    style="top: 20%; left: 10%; --duration: 4s; --move-x: 20px; --move-y: -20px;"></div>
+                <div class="absolute w-2 h-2 bg-yellow-200 rounded-full blur-[2px] animate-firefly"
+                    style="top: 50%; left: 20%; --duration: 6s; --move-x: -30px; --move-y: 40px;"></div>
+                <div class="absolute w-1 h-1 bg-yellow-400 rounded-full blur-[1px] animate-firefly"
+                    style="top: 80%; left: 70%; --duration: 5s; --move-x: 50px; --move-y: -30px;"></div>
+                <div class="absolute w-1.5 h-1.5 bg-yellow-300 rounded-full blur-[1px] animate-firefly"
+                    style="top: 30%; left: 80%; --duration: 7s; --move-x: -20px; --move-y: -40px;"></div>
+                <div class="absolute w-1 h-1 bg-yellow-400 rounded-full blur-[1px] animate-firefly"
+                    style="top: 60%; left: 90%; --duration: 5s; --move-x: 30px; --move-y: 30px;"></div>
+            </div>
         </div>
         <div class="relative z-10 text-center px-6 space-y-6 animate-float-slow">
             <!-- Decorative floating elements removed -->
@@ -111,10 +126,15 @@
                 <span>Dhea</span>
             </h1>
 
-            <div class="glass p-6 rounded-2xl max-w-sm mx-auto backdrop-blur-md border border-white/20 relative">
-                <div class="absolute -top-3 -right-3 text-2xl animate-spin-slow pointer-events-none">🌸</div>
-                <p class="text-xs font-bold uppercase tracking-widest mb-2 opacity-80">Dear </p>
-                <h2 id="guest-name" class="text-2xl md:text-3xl font-bold text-pink-200 break-words">Guest</h2>
+            <div
+                class="p-8 rounded-2xl max-w-sm mx-auto backdrop-blur-xl bg-white/10 dark:bg-black/20 border border-white/30 shadow-[0_8px_32px_rgba(31,38,135,0.37)] relative overflow-hidden group">
+                <div
+                    class="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                </div>
+                <p class="text-xs font-bold uppercase tracking-widest mb-3 opacity-90 text-white/80">Dear Special Guest
+                </p>
+                <h2 id="guest-name"
+                    class="text-3xl md:text-4xl font-handwriting text-pink-200 break-words drop-shadow-md">Guest</h2>
             </div>
             <button onclick="openInvitation()"
                 class="group relative px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full font-bold shadow-[0_0_20px_rgba(236,72,153,0.5)] hover:scale-105 transition-transform min-h-[50px]">
