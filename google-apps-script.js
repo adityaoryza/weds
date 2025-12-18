@@ -51,9 +51,33 @@ function doPost(e) {
     }
 }
 
-// Handle GET requests (for testing)
+// Handle GET requests - Return all RSVP data
 function doGet(e) {
-    return ContentService
-        .createTextOutput(JSON.stringify({ status: 'ok', message: 'RSVP API is running' }))
-        .setMimeType(ContentService.MimeType.JSON);
+    try {
+        const ss = SpreadsheetApp.getActiveSpreadsheet();
+        const sheet = ss.getSheetByName('RSVP') || ss.getActiveSheet();
+
+        // Get all data (skip header row)
+        const data = sheet.getDataRange().getValues();
+        const rows = data.slice(1);
+
+        // Convert to array of objects
+        const rsvpList = rows.map(row => ({
+            timestamp: row[0],
+            name: row[1],
+            attendance: row[2],
+            guestCount: row[3],
+            message: row[4]
+        })).filter(item => item.name && item.message); // Only items with name AND message
+
+        // Return as JSON (newest first)
+        return ContentService
+            .createTextOutput(JSON.stringify({ success: true, data: rsvpList.reverse() }))
+            .setMimeType(ContentService.MimeType.JSON);
+
+    } catch (error) {
+        return ContentService
+            .createTextOutput(JSON.stringify({ success: false, message: error.toString(), data: [] }))
+            .setMimeType(ContentService.MimeType.JSON);
+    }
 }

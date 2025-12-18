@@ -282,7 +282,7 @@ window.addEventListener('load', () => {
 
 document.addEventListener('DOMContentLoaded', () => {
     initParticles();
-    renderGuestBook();
+    fetchGuestBookFromSheets(); // Load guest book from Google Sheets
 
     // Intersection Observer for Reveal Animations
     const observer = new IntersectionObserver((entries) => {
@@ -437,20 +437,70 @@ function toggleGuestCount(input) {
     }
 }
 
-// Guest Book Data with Persistence
-const defaultGuestBookData = [
-    { name: "Putri & Dimas", message: "Congratulations lovebirds! 🦄 Can't wait on the big day!", date: "2 mins ago", attendance: "accept", guestCount: 2 },
-    { name: "Auntie Sarah", message: "So happy for you both. May your life be filled with magic. ✨", date: "1 hour ago", attendance: "accept", guestCount: 1 },
-    { name: "Budi Santoso", message: "Maaf tidak bisa hadir, tapi doa kami menyertai kalian. 🐸", date: "3 hours ago", attendance: "decline", guestCount: 0 }
-];
+// Guest Book Data - will be loaded from Google Sheets
+let guestBookData = [];
 
-// Load from localStorage or use defaults
-let savedGuestBook = localStorage.getItem('weddingGuestBook');
-let guestBookData = savedGuestBook ? JSON.parse(savedGuestBook) : defaultGuestBookData;
+// Fetch guest book from Google Sheets
+async function fetchGuestBookFromSheets() {
+    try {
+        const response = await fetch(GOOGLE_SCRIPT_URL);
+        const result = await response.json();
+
+        if (result.success && result.data) {
+            // Format data for display
+            guestBookData = result.data.map(item => ({
+                name: item.name,
+                message: item.message,
+                date: formatTimestamp(item.timestamp),
+                attendance: item.attendance,
+                guestCount: item.guestCount
+            }));
+            renderGuestBook();
+        }
+    } catch (error) {
+        console.warn('Failed to fetch from Google Sheets, using localStorage:', error);
+        // Fallback to localStorage
+        const saved = localStorage.getItem('weddingGuestBook');
+        if (saved) {
+            guestBookData = JSON.parse(saved);
+            renderGuestBook();
+        }
+    }
+}
+
+// Format timestamp to relative time
+function formatTimestamp(timestamp) {
+    if (!timestamp) return 'Just now';
+    try {
+        const date = new Date(timestamp);
+        const now = new Date();
+        const diffMs = now - date;
+        const diffMins = Math.floor(diffMs / 60000);
+        const diffHours = Math.floor(diffMs / 3600000);
+        const diffDays = Math.floor(diffMs / 86400000);
+
+        if (diffMins < 1) return 'Just now';
+        if (diffMins < 60) return `${diffMins} mins ago`;
+        if (diffHours < 24) return `${diffHours} hours ago`;
+        if (diffDays < 7) return `${diffDays} days ago`;
+        return date.toLocaleDateString('id-ID');
+    } catch {
+        return 'Recently';
+    }
+}
 
 function renderGuestBook() {
     const list = document.getElementById('guest-book-list');
     if (!list) return;
+
+    if (guestBookData.length === 0) {
+        list.innerHTML = `
+            <div class="text-center py-8 opacity-60">
+                <p class="text-sm">Belum ada ucapan. Jadilah yang pertama! 💌</p>
+            </div>
+        `;
+        return;
+    }
 
     list.innerHTML = guestBookData.map(entry => {
         const guestText = entry.attendance === 'accept' && entry.guestCount
@@ -458,7 +508,7 @@ function renderGuestBook() {
             : '';
 
         return `
-        <div class="p-4 rounded-xl bg-purple-50 dark:bg-white/5 border border-purple-100 dark:border-white/10 animate-sparkle-fade">
+        <div class="p-4 rounded-xl bg-purple-50 dark:bg-white/5 border border-purple-100 dark:border-white/10">
             <div class="flex justify-between items-start mb-2">
                 <div>
                     <h4 class="font-bold text-sm text-purple-900 dark:text-purple-200">
@@ -480,7 +530,7 @@ function renderGuestBook() {
 // GOOGLE SHEETS INTEGRATION
 // ========================================
 // TODO: Replace with your Google Apps Script URL after deployment
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwy_F2s3IwzWXamhX2aWfMCPh8K7T5u54VbCWJxGOl2YdCCk6YPzTuvQwX-UGiqf5zx6A/exec';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzIX4nWYnqdnzEQKbYDGgPZUdTJBhkozU9U56-P33T37gjQhYfwm_ZBhliS4ixJ7NlMcA/exec';
 
 async function submitRSVP(e) {
     e.preventDefault();
