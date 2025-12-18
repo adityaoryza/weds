@@ -529,27 +529,37 @@ function submitRSVP(e) {
             renderGuestBook();
         }
 
-        // 3. Change Form Content to Success Message
+        // 3. Smooth fade-out transition
         const container = e.target.closest('.glass');
-        // Only replace the FORM content, not the whole section if possible,
-        // but here the container is the glass card wrapping the form.
-        container.innerHTML = `
-            <div class="text-center py-12 flex flex-col items-center animate-sparkle-fade">
-                <div class="text-6xl mb-4 animate-bounce">💌</div>
-                <h3 class="text-4xl font-handwriting text-purple-800 dark:text-white mb-2">Message Sent!</h3>
-                <p class="opacity-80 max-w-sm mx-auto mb-6">Your response has been delivered to the stars. Thank you for being part of our fairytale.</p>
-                <div class="bg-purple-100 dark:bg-purple-900/50 px-4 py-2 rounded-lg text-xs font-bold text-purple-700 dark:text-purple-300 mb-6">
-                    See your wish below! 👇
-                </div>
-                <button onclick="location.reload()" class="text-pink-500 font-bold hover:underline text-sm uppercase tracking-widest">
-                    Send another response
-                </button>
-            </div>
-        `;
+        container.style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';
+        container.style.opacity = '0';
+        container.style.transform = 'translateY(-20px)';
 
-        // Scroll to guest book to show the new message
+        // 4. After fade-out, update content and scroll
         setTimeout(() => {
-            document.getElementById('guest-book-section').scrollIntoView({ behavior: 'smooth' });
+            container.innerHTML = `
+                <div class="text-center py-12 flex flex-col items-center">
+                    <div class="text-6xl mb-4 animate-bounce">💌</div>
+                    <h3 class="text-4xl font-handwriting text-purple-800 dark:text-white mb-2">Message Sent!</h3>
+                    <p class="opacity-80 max-w-sm mx-auto mb-6">Your response has been delivered to the stars. Thank you for being part of our fairytale.</p>
+                    <div class="bg-purple-100 dark:bg-purple-900/50 px-4 py-2 rounded-lg text-xs font-bold text-purple-700 dark:text-purple-300 mb-6">
+                        See your wish below! 👇
+                    </div>
+                    <button onclick="location.reload()" class="text-pink-500 font-bold hover:underline text-sm uppercase tracking-widest">
+                        Send another response
+                    </button>
+                </div>
+            `;
+
+            // Fade back in
+            container.style.opacity = '1';
+            container.style.transform = 'translateY(0)';
+
+            // Smooth scroll to guest book immediately
+            const guestBook = document.getElementById('guest-book-section');
+            if (guestBook) {
+                guestBook.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
         }, 500);
 
     }, 1500);
