@@ -469,10 +469,24 @@ async function fetchGuestBookFromSheets() {
 }
 
 // Format timestamp to relative time
+// Handles Indonesian format: "18/12/2025, 14.27.05"
 function formatTimestamp(timestamp) {
     if (!timestamp) return 'Just now';
     try {
-        const date = new Date(timestamp);
+        let date;
+
+        // Handle Indonesian format: DD/MM/YYYY, HH.MM.SS
+        if (typeof timestamp === 'string' && timestamp.includes('/')) {
+            const [datePart, timePart] = timestamp.split(', ');
+            const [day, month, year] = datePart.split('/');
+            const [hour, min, sec] = (timePart || '00.00.00').split('.');
+            date = new Date(year, month - 1, day, hour, min, sec);
+        } else {
+            date = new Date(timestamp);
+        }
+
+        if (isNaN(date.getTime())) return 'Recently';
+
         const now = new Date();
         const diffMs = now - date;
         const diffMins = Math.floor(diffMs / 60000);
