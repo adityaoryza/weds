@@ -12,14 +12,14 @@
         content="Wedding invitation of Irfan & Dhea. Join us in celebrating our magical union on Saturday, January 24th, 2026 in Yogyakarta, Indonesia.">
     <meta name="keywords" content="wedding, invitation, Irfan, Dhea, Yogyakarta, pernikahan, undangan">
     <meta name="author" content="Irfan & Dhea">
-    <link rel="canonical" href="https://irfan-dhea.wedding">
+    <link rel="canonical" href="https://adityaoryza.github.io/weds">
 
     <!-- Open Graph / WhatsApp Sharing -->
     <meta property="og:title" content="The Wedding of Irfan & Dhea">
     <meta property="og:description" content="You are invited to celebrate our magical union. Saturday, Jan 24th, 2026.">
-    <meta property="og:image" content="assets/images/hero_bg.webp">
+    <meta property="og:image" content="https://adityaoryza.github.io/weds/assets/images/hero_bg.webp">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://irfan-dhea.wedding">
+    <meta property="og:url" content="https://adityaoryza.github.io/weds">
     <meta property="og:locale" content="id_ID">
 
     <!-- Twitter Card -->
@@ -27,7 +27,7 @@
     <meta name="twitter:title" content="The Wedding of Irfan & Dhea">
     <meta name="twitter:description"
         content="You are invited to celebrate our magical union. Saturday, Jan 24th, 2026.">
-    <meta name="twitter:image" content="assets/images/hero_bg.webp">
+    <meta name="twitter:image" content="https://adityaoryza.github.io/weds/assets/images/hero_bg.webp">
 
     <meta name="robots" content="noindex, nofollow">
 
@@ -35,30 +35,33 @@
     <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
 
-    <!-- Performance: Preload Critical CSS -->
+    <!-- Performance: Preload Critical Assets -->
     <link rel="preload" href="assets/css/site.min.css" as="style">
+    <link rel="preload" href="assets/css/fonts.css" as="style">
+    <link rel="preload" href="assets/images/hero_bg.webp" as="image">
+    <link rel="preload" href="assets/fonts/dancing-script.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/fonts/quicksand.woff2" as="font" type="font/woff2" crossorigin>
 
-    <!-- Tailwind CSS -->
+    <!-- Tailwind CSS (CDN required for runtime config with dark mode) -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Google Fonts with font-display: swap for performance -->
+    <!-- Self-hosted Fonts -->
+    <link href="assets/css/fonts.css" rel="stylesheet">
+
+    <!-- Material Symbols (Google Fonts) -->
     <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0&display=swap"
         rel="stylesheet">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Quicksand:wght@300;400;600&family=Cinzel:wght@400;600&display=swap"
-        rel="stylesheet">
 
-    <!-- Tone.js (async loading) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js" async></script>
+    <!-- Tone.js (deferred loading for better performance) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js" defer></script>
 
-    <!-- Minified CSS for production -->
+    <!-- Custom Animations & Styles -->
     <link href="assets/css/site.min.css" rel="stylesheet">
     <link rel="icon"
         href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦄</text></svg>">
-    <audio id="bg-music" loop>
+    <audio id="bg-music" loop preload="none">
         <source src="assets/music/Nadin.mp3" type="audio/mpeg">
     </audio>
     <script>
@@ -112,7 +115,7 @@
     </script>
 </head>
 
-<body class="overflow-hidden bg-wedding-purple-50 dark:bg-wedding-dark">
+<body class="overflow-hidden bg-wedding-purple-50 dark:bg-wedding-dark day-mode">
 
     <!-- Particle Background -->
     <div id="particles-container"></div>
@@ -167,7 +170,7 @@
     <div id="cover-page"
         class="fixed inset-0 z-[100] bg-black text-white flex flex-col items-center justify-center transition-transform duration-1000 ease-in-out">
         <div class="absolute inset-0 z-0 overflow-hidden">
-            <img src="assets/images/hero_bg.png" class="w-full h-full object-cover opacity-60 animate-ken-burns"
+            <img src="assets/images/hero_bg.webp" class="w-full h-full object-cover opacity-60 animate-ken-burns"
                 alt="Cover Background">
             <!-- Darker overlay to reduce overexposure -->
             <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60"></div>
@@ -225,7 +228,10 @@
         class="fixed top-0 w-full z-50 bg-white/30 dark:bg-black/30 backdrop-blur-xl border-b border-white/10 dark:border-white/5 transition-all duration-1000 ease-in-out shadow-sm transform -translate-y-full">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a class="flex items-center active:scale-95 transition-transform" href="#" onclick="window.scrollTo(0,0)">
-                <img src="assets/images/logo.png" alt="Irfan & Dhea" class="h-10 md:h-12 w-auto">
+                <picture>
+                    <source srcset="assets/images/logo.webp" type="image/webp">
+                    <img src="assets/images/logo.webp" alt="Irfan & Dhea" class="h-10 md:h-12 w-auto">
+                </picture>
             </a>
             <div class="hidden md:flex items-center space-x-8">
                 <a class="text-sm font-bold tracking-widest hover:text-purple-600 dark:hover:text-purple-300 transition-colors"
@@ -286,8 +292,12 @@
     <!-- Hero Section -->
     <section id="hero"
         class="min-h-screen flex items-center justify-center text-center relative overflow-hidden bg-cover bg-center"
-        style="background-image: url('assets/images/hero_bg.webp'), url('assets/images/hero_bg.png');">
-        <!-- Fallback: if webp fails, PNG will be used -->
+        style="background-image: url('assets/images/hero_bg.webp');">
+
+        <!-- Dark Mode Overlay - Gloomy effect -->
+        <div
+            class="absolute inset-0 bg-gradient-to-b from-black/50 via-purple-900/40 to-black/60 opacity-0 dark:opacity-100 transition-opacity duration-500 z-[1]">
+        </div>
 
         <!-- Hidden Unicorn #1 (Floating safely in hero area - Repositioned) -->
         <div class="hidden-unicorn absolute right-[10%] top-[20%] md:right-[20%] md:top-[30%] animate-float-medium z-20 scale-125 cursor-pointer"
@@ -571,7 +581,7 @@
                 <div
                     class="glass p-6 rounded-2xl border-4 border-white/50 text-center reveal flex flex-col items-center justify-center min-h-[300px] bg-cover bg-center relative group overflow-hidden">
                     <!-- Using hero image as map bg placeholder -->
-                    <img src="assets/images/hero_bg.png"
+                    <img src="assets/images/hero_bg.webp"
                         class="absolute inset-0 w-full h-full object-cover opacity-50 contrast-50 grayscale transition-all duration-500 group-hover:grayscale-0 group-hover:scale-110">
                     <div class="relative z-10 glass p-6 rounded-xl">
                         <h3 class="font-bold text-xl mb-2">Yogyakarta</h3>
@@ -580,7 +590,7 @@
                         <div
                             class="w-full h-48 md:h-64 rounded-xl overflow-hidden shadow-lg mb-6 border border-white/20">
                             <iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0"
-                                marginwidth="0"
+                                marginwidth="0" loading="lazy"
                                 src="https://maps.google.com/maps?q=Ndalem+Sorogenen+Guesthouse&t=&z=15&ie=UTF8&iwloc=&output=embed">
                             </iframe>
                         </div>
@@ -768,7 +778,7 @@
                     <div
                         class="bg-white dark:bg-[#1a103c] rounded-2xl p-6 border border-purple-200 dark:border-white/10 relative text-left shadow-inner group-hover:border-purple-500/30 transition-colors duration-500 reveal">
                         <div class="flex justify-between items-start mb-8">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Bank_Central_Asia.svg/1200px-Bank_Central_Asia.svg.png"
+                            <img src="assets/images/bca-logo.svg"
                                 class="h-8 bg-white px-2 py-1 rounded shadow-sm object-contain" alt="BCA">
                             <img src="assets/images/chip.png" onerror="this.style.display='none'" class="h-8 opacity-50"
                                 alt="Chip"> <!-- Optional chip visual -->
@@ -996,7 +1006,7 @@
     <!-- Interactive Wishes -->
     <section
         class="py-20 bg-gradient-to-br from-wedding-purple-100 to-wedding-pink-50 dark:from-wedding-dark dark:to-wedding-dark-deep text-wedding-purple-900 dark:text-white relative overflow-hidden text-center">
-        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20">
+        <div class="absolute inset-0 bg-[url('assets/images/stardust.png')] opacity-20">
         </div>
         <div class="container mx-auto px-6 relative z-10 reveal">
             <h2 class="text-4xl font-handwriting mb-4 text-wedding-purple-900 dark:text-white">Make A Wish</h2>

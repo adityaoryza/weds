@@ -1,0 +1,24 @@
+/* Self-hosted Google Fonts */
+@font-face {
+    font-family: 'Dancing Script';
+    font-style: normal;
+    font-weight: 400 700;
+    font-display: swap;
+    src: url('../fonts/dancing-script.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Quicksand';
+    font-style: normal;
+    font-weight: 300 600;
+    font-display: swap;
+    src: url('../fonts/quicksand.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Cinzel';
+    font-style: normal;
+    font-weight: 400 600;
+    font-display: swap;
+    src: url('../fonts/cinzel.woff2') format('woff2');
+}

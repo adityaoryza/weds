@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+/* Custom Wedding Color Palette */
+@theme {
+    --color-wedding-purple-50: #FDF4FF;
+    --color-wedding-purple-100: #F3E8FF;
+    --color-wedding-purple-200: #E9D5FF;
+    --color-wedding-purple-300: #C084FC;
+    --color-wedding-purple-400: #A855F7;
+    --color-wedding-purple-500: #9333EA;
+    --color-wedding-purple-600: #7E22CE;
+    --color-wedding-purple-700: #6B21A8;
+    --color-wedding-purple-800: #581C87;
+    --color-wedding-purple-900: #3B0764;
+
+    --color-wedding-pink-50: #FCE7F3;
+    --color-wedding-pink-100: #FBD5E9;
+    --color-wedding-pink-200: #F9A8D4;
+    --color-wedding-pink-300: #F472B6;
+    --color-wedding-pink-400: #EC4899;
+    --color-wedding-pink-500: #DB2777;
+    --color-wedding-pink-600: #BE185D;
+
+    --color-wedding-lavender: #E6E6FA;
+    --color-wedding-dark: #2A1B4E;
+    --color-wedding-dark-deep: #1A103C;
+
+    --font-handwriting: "Dancing Script", cursive;
+    --font-body: "Quicksand", sans-serif;
+    --font-title: "Cinzel", serif;
+}

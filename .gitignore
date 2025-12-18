@@ -8,6 +8,7 @@ yarn-error.log*
 optimize-images.js
 package.json
 package-lock.json
+_unused_images/
 
 # OS files
 .DS_Store
