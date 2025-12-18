@@ -97,9 +97,9 @@ function toggleTheme() {
 let unicornsFound = 0;
 const totalUnicorns = 5;
 
-function foundUnicorn(el) {
+function foundUnicorn(el, event) {
     // Stop propagation to prevent body ripple
-    event.stopPropagation();
+    if (event) event.stopPropagation();
 
     if (el.classList.contains('found')) return;
 
