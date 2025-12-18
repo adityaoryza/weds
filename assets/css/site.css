@@ -23,6 +23,30 @@
             color: #e2e8f0;
         }
 
+        /* Dark mode gloomy filter for hero images */
+        .dark #hero,
+        body.night-mode #hero {
+            filter: none;
+        }
+
+        .dark #hero img,
+        .dark #cover-page img,
+        body.night-mode #hero img,
+        body.night-mode #cover-page img {
+            filter: brightness(0.6) contrast(1.1) saturate(0.8) sepia(0.2);
+            transition: filter 0.5s ease;
+        }
+
+        .dark #hero::before,
+        body.night-mode #hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(15, 10, 40, 0.4), rgba(88, 28, 135, 0.3), rgba(15, 10, 40, 0.5));
+            z-index: 1;
+            pointer-events: none;
+        }
+
         /* --- Magic Dust Cursor --- */
         .magic-dust {
             position: fixed;
