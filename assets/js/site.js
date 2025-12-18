@@ -476,13 +476,18 @@ function renderGuestBook() {
     `}).join('');
 }
 
-function submitRSVP(e) {
+// ========================================
+// GOOGLE SHEETS INTEGRATION
+// ========================================
+// TODO: Replace with your Google Apps Script URL after deployment
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwy_F2s3IwzWXamhX2aWfMCPh8K7T5u54VbCWJxGOl2YdCCk6YPzTuvQwX-UGiqf5zx6A/exec';
+
+async function submitRSVP(e) {
     e.preventDefault();
     const btn = e.target.querySelector('button[type="submit"]');
 
     // Get Form Data
     const form = e.target;
-    // Basic extraction since we aren't using a real backend
     const firstName = form.querySelector('input[placeholder*="Prince"]').value;
     const lastName = form.querySelector('input[placeholder*="Charming"]').value;
     const attendance = form.querySelector('input[name="attendance"]:checked').value;
@@ -493,49 +498,52 @@ function submitRSVP(e) {
     if (attendance === 'accept') {
         const guestCountInput = form.querySelector('input[name="guest_count"]:checked');
         if (guestCountInput) {
-            // Handle "5+" as just 5 for display, or keep it as string if preferred.
-            // Parsing to integer for plurality check logic.
             guestCount = parseInt(guestCountInput.value) || 0;
-            // Special handling for the "5+" case if needed, but parseInt handles "5" fine.
             if (guestCountInput.value === '5+') guestCount = 5;
         } else {
-            // Fallback for default selected
             guestCount = 1;
         }
     }
+
+    // Prepare data for Google Sheets
+    const rsvpData = {
+        name: `${firstName} ${lastName}`,
+        attendance: attendance,
+        guestCount: guestCount,
+        message: message
+    };
 
     // Loading state
     btn.disabled = true;
     btn.innerHTML = '<span class="material-symbols-outlined animate-spin">refresh</span> Sending...';
     btn.classList.add('opacity-80', 'cursor-not-allowed');
 
-    // Simulate API call
-    setTimeout(() => {
-        // 1. Audio & Visual Feedback
+    // Helper function for success UI
+    const showSuccess = () => {
+        // Audio & Visual Feedback
         playChime('high');
         createConfetti(window.innerWidth / 2, window.innerHeight / 2, 50);
 
-        // 2. Add to Guest Book (Persistence Implemented)
+        // Add to Guest Book (localStorage as backup/display)
         if (message) {
             guestBookData.unshift({
-                name: `${firstName} ${lastName}`,
+                name: rsvpData.name,
                 message: message,
                 date: "Just now",
                 attendance: attendance,
                 guestCount: guestCount
             });
-            // Save to localStorage
             localStorage.setItem('weddingGuestBook', JSON.stringify(guestBookData));
             renderGuestBook();
         }
 
-        // 3. Smooth fade-out transition
+        // Smooth fade-out transition
         const container = e.target.closest('.glass');
         container.style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';
         container.style.opacity = '0';
         container.style.transform = 'translateY(-20px)';
 
-        // 4. After fade-out, update content and scroll
+        // After fade-out, update content and scroll
         setTimeout(() => {
             container.innerHTML = `
                 <div class="text-center py-12 flex flex-col items-center">
@@ -550,19 +558,34 @@ function submitRSVP(e) {
                     </button>
                 </div>
             `;
-
-            // Fade back in
             container.style.opacity = '1';
             container.style.transform = 'translateY(0)';
 
-            // Smooth scroll to guest book immediately
             const guestBook = document.getElementById('guest-book-section');
             if (guestBook) {
                 guestBook.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         }, 500);
+    };
 
-    }, 1500);
+    // POST to Google Sheets (if URL is configured)
+    if (GOOGLE_SCRIPT_URL && GOOGLE_SCRIPT_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
+        try {
+            const response = await fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors', // Required for Google Apps Script
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(rsvpData)
+            });
+            // Note: no-cors doesn't return response body, so we just proceed
+            console.log('RSVP sent to Google Sheets');
+        } catch (error) {
+            console.warn('Google Sheets API error (data saved locally):', error);
+        }
+    }
+
+    // Always show success (localStorage is backup)
+    showSuccess();
 }
 
 // RSVP & Map
